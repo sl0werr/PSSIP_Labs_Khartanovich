@@ -1,0 +1,7 @@
+body{
+    background-image: url('фон.webp');
+    background-repeat: repeat-x;
+    font-family: "Times New Roman", serif;
+    font-size: 16px;
+    color: blue;
+}

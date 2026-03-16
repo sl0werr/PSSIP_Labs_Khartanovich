@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript задания</title>
+    <script>
+        // Задание 1
+        function showCurrentHour() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            alert(`Текущий час: ${currentHour}`);
+        }
+    </script>
+    <script src="external.js"></script>
+</head>
+<body>
+    <!-- Задание 1 -->
+    <section>
+        <h2>Задание 1</h2>
+        <button onclick="showCurrentHour()">Показать текущий час</button>
+    </section>
+    
+    <!-- Задание 2 -->
+    <section>
+        <h2>Задание 2</h2>
+        <script>
+            const n = 17;
+            const fullName = "Хартанович Никита";
+            
+            document.write('<div>');
+            for (let i = 0; i < n + 5; i++) {
+                document.write(`<p>${i+1}. ${fullName}</p>`);
+            }
+            document.write('</div>');
+        </script>
+    </section>
+    
+    <!-- Задание 3 -->
+    <section>
+        <h2>Задание 3</h2>
+        <script>
+            const arr = [2, 5, 7, 10, 3, 8, 4, 9];
+            let product = 1;
+            
+            for (let num of arr) {
+                if (num % 2 !== 0) {
+                    product *= num;
+                }
+            }
+            
+            const reversedArr = [...arr].reverse();
+            
+            document.write(`<p>Исходный массив: [${arr.join(', ')}]</p>`);
+            document.write(`<p>Произведение нечетных элементов: ${product}</p>`);
+            document.write(`<p>Перевернутый массив: [${reversedArr.join(', ')}]</p>`);
+        </script>
+    </section>
+    
+    <!-- Задание 4 -->
+    <section>
+        <h2>Задание 4</h2>
+        <script>
+            const result1 = calculate(6, 2);
+            const result2 = calculate(4, 3);  
+            const result3 = calculate(2, 0); 
+            const result4 = calculate(-2, 0);
+            const resultError = calculate(5, 0); 
+            
+            document.write(`<p>calculate(6, 2) = ${result1}</p>`);
+            document.write(`<p>calculate(4, 3) = ${result2}</p>`);
+            document.write(`<p>calculate(2, 0) = ${result3}</p>`);
+            document.write(`<p>calculate(-2, 0) = ${result4}</p>`);
+        </script>
+    </section>
+    
+    <!-- Задание 5 -->
+    <section>
+        <h2>Задание 5</h2>
+        <script>
+            const s1 = "Хартанович";
+            const s2 = "Гродно, Советских Пограничников, 2";
+            
+            const lengthS2 = s2.length;
+            
+            const concatenated = s1 + " " + s2;
+            
+            const s2Lower = s2.toLowerCase();
+            
+            document.write(`<p>Длина строки S2: ${lengthS2} символов</p>`);
+            document.write(`<p>Сцепление S1 и S2: "${concatenated}"</p>`);
+            document.write(`<p>S2 в нижнем регистре: "${s2Lower}"</p>`);
+        </script>
+    </section>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/footer.css">
+    <link rel="stylesheet" href="CSS/top.css">
+    <link rel="stylesheet" href="CSS/header.css">
+    <title>Каталог замков</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #fff;
+            color: #333;
+            padding: 20px;
+            line-height: 1.5;
+        }
+        
+        /* Хлебные крошки */
+        .breadcrumbs {
+            margin-top: 100px;
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .breadcrumbs a {
+            color: #666;
+            text-decoration: none;
+            margin-right: 5px;
+        }
+        
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        
+        .breadcrumbs span {
+            margin: 0 5px;
+        }
+        
+        /* Основной контент */
+        .main-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color: #000;
+            text-align: center;
+        }
+        
+        /* Категории */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        
+        .category-item {
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            font-size: 16px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            transition: all 0.3s ease;
+        }
+        
+        .category-item:hover {
+            background-color: #f8f8f8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        
+        /* Кнопка "Смотрите все" */
+        .see-all-container {
+            text-align: center;
+            margin: 50px 0;
+        }
+        
+        .see-all-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: #1f7dd0;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+        
+        .see-all-button:hover {
+            background-color: #4a21c4;
+            transform: scale(1.05);
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .main-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-banner">
+        <div class="banner-content">
+        Скидка 10% по промокоду "ZAMOK" на все заказы до 10.09
+        </div>
+        <a href="#" class="banner-link">Обратный звонок</a>
+    </div>
+    
+    <header>
+        <div class="header-container">
+            <img src="IMG/logo.png" width="35" alt="Логотип">
+            <nav>
+                <ul>
+                    <li><a href="DoorLocksShop.html">Главная</a></li>
+                    <li class="has-dropdown">
+                        <a href="categoty.html">Каталог</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Цилиндровые замки</a></li>
+                            <li><a href="#">Сувальдные замки</a></li>
+                            <li><a href="#">Электронные замки</a></li>
+                            <li><a href="#">Врезные замки</a></li>
+                            <li><a href="cat1.html">Накладные замки</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Оптовая продажа</a></li>
+                    <li><a href="#">О нас</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-contacts">
+                <div class="phone">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>+7 (966) 55 88 499</span>
+                </div>
+                
+                <div class="icon-buttons">
+                    <div class="icon-btn" title="Избранное">
+                        <i class="far fa-heart"></i>
+                    </div>
+                    <div class="icon-btn" title="Корзина">
+                        <i class="fas fa-shopping-basket"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="burger" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <!-- Мобильное меню -->
+        <nav class="mobile-nav" id="mobileNav">
+            <ul>
+                <li><a href="DoorLocksShop.html">Главная</a></li>
+                <li><a href="categoty.html">Каталог</a></li>
+                <li><a href="#">Оптовая продажа</a></li>
+                <li><a href="#">О нас</a></li>
+            </ul>
+        </nav>
+
+    </header>
+    <!-- Хлебные крошки -->
+    <div class="breadcrumbs">
+        <a href="DoorLocksShop.html">Главная</a>
+        <span>&gt;</span>
+        <a href="#">Каталог</a>
+    </div>
+    
+    <!-- Основной контент -->
+    <h1 class="main-title">Категории</h1>
+    
+    <!-- Сетка категорий -->
+    <div class="categories-grid">
+        <div class="category-item" onclick="selectCategory('Накладные электронные замки')">
+            Накладные электронные замки
+        </div>
+        
+        <div class="category-item" onclick="selectCategory('Врезные электронные замки')">
+            Врезные электронные замки
+        </div>
+        
+        <div class="category-item" onclick="selectCategory('Замки для квартиры')">
+            Замки для квартиры
+        </div>
+        
+        <div class="category-item" onclick="selectCategory('Замки для дома')">
+            Замки для дома
+        </div>
+        
+        <div class="category-item" onclick="selectCategory('Замки для отелей')">
+            Замки для отелей
+        </div>
+        
+        <div class="category-item" onclick="selectCategory('Замки для офиса')">
+            Замки для офиса
+        </div>
+        
+        <div class="category-item" onclick="selectCategory('Замки для шкафчиков')">
+            Замки для шкафчиков
+        </div>
+        
+        <div class="category-item" onclick="selectCategory('Замки для раздевалок')">
+            Замки для раздевалок
+        </div>
+    </div>
+    
+    <!-- Кнопка "Смотрите все" -->
+    <div class="see-all-container">
+        <button class="see-all-button" onclick="showAllCategories()">Смотрите все</button>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo-column">
+                <img src="IMG/logo.png" alt="Golden Soft Logo" class="footer-logo">
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-vk"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Навигация</h3>
+                <ul class="footer-list">
+                    <li><a href="#">Главная</a></li>
+                    <li><a href="#">Каталог</a></li>
+                    <li><a href="#">Оптовая продажа</a></li>
+                    <li><a href="#">О нас</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Наши Контакты</h3>
+                <ul class="footer-list">
+                    <li class="contact-item">
+                        <span class="contact-icon"><i class="fas fa-phone"></i></span>
+                        <span>+7 (988) 565 00 38</span>
+                    </li>
+                    <li class="contact-item">
+                        <span class="contact-icon"><i class="fas fa-phone"></i></span>
+                        <span>+375 33 662 82 56</span>
+                    </li>
+                    <li class="contact-item">
+                        <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                        <span>vladpertcev@mail.ru</span>
+                    </li>
+                    <li class="contact-item">
+                        <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                        <span>korobko416@gmail.com</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Наш Адрес</h3>
+                <ul class="footer-list">
+                    <li class="contact-item">
+                        <span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+                        <span>Россия, Ростов-на-Дону<br>ул. Богачева, 16</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Информация</h3>
+                <ul class="footer-list">
+                    <li><a href="#">Доставка и оплата</a></li>
+                    <li><a href="#">Гарантии</a></li>
+                    <li><a href="#">Возврат товара</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            © 2021 Golden Soft All rights reserved.
+        </div>
+    </footer>
+    
+    <script>
+        // Функция для выбора категории
+        function selectCategory(categoryName) {
+            alert(`Вы выбрали категорию: "${categoryName}"`);
+            // Здесь можно добавить переход на страницу категории
+        }
+        
+        // Функция для показа всех категорий
+        function showAllCategories() {
+            alert('Показать все категории товаров');
+            // Здесь можно добавить логику для показа всех категорий
+        }
+        
+        // Добавляем обработчики событий для всех категорий
+        document.querySelectorAll('.category-item').forEach(item => {
+            // Добавляем эффект при наведении
+            item.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = '#f5f5f5';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = '#fff';
+            });
+        });
+    </script>
+</body>
+</html>

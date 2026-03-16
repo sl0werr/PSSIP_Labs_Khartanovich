@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        #element2 {
+            cursor: pointer;
+            padding: 10px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .tooltip {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Задание 1 -->
+    <h1>Лабораторная работа</h1>
+    <p><strong>ФИО:</strong> Хартанович Никита Иванович</p>
+    <div id="element2"><strong>Дата рождения:</strong> 14.02.2007</div>
+    <img src="img.jpg" alt="Пример изображения" onerror="this.src='https://via.placeholder.com/150'">
+    
+    <!-- Задание 2 -->
+    <div id="documentInfo"></div>
+    
+    <script>
+        // Задание 2
+        function showDocumentInfo() {
+            const now = new Date();
+            const docSize = document.documentElement.outerHTML.length / 1024; // в KB
+            const infoDiv = document.getElementById('documentInfo');
+            infoDiv.innerHTML += `<p>Текущая дата: ${now.toLocaleString()}, Размер документа: ${docSize.toFixed(2)} KB</p>`;
+            
+            // Ограничиваем количество выводимых сообщений
+            if (infoDiv.children.length > 5) {
+                infoDiv.removeChild(infoDiv.firstChild);
+            }
+        }
+        
+        // Выводим информацию каждые 3 секунды (начиная с первой через 1 сек)
+        setTimeout(() => {
+            showDocumentInfo();
+            setInterval(showDocumentInfo, 3000);
+        }, 1000);
+        
+        // Задание 3 и удаление элемента при клике (Задание 2)
+        const element2 = document.getElementById('element2');
+        if (element2) {
+            element2.addEventListener('click', function() {
+                // Применяем стили (Задание 3)
+                this.style.color = 'red';
+                this.style.backgroundColor = 'green';
+                this.style.fontFamily = 'Arial';
+                this.style.fontWeight = 'bold';
+                this.style.fontSize = '16px';
+                this.style.border = '2px solid yellow';
+                this.style.padding = '10px';
+                
+                // Удаляем элемент через 1 секунду (Задание 2)
+                setTimeout(() => {
+                    this.remove();
+                }, 1000);
+            });
+        }
+        
+        // Задание 4
+        // Проверка cookies
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                alert('Cookies включены: ' + (navigator.cookieEnabled ? 'Да' : 'Нет'));
+                
+                // Пытаемся закрыть окно (может не работать в некоторых случаях)
+                try {
+                    setTimeout(() => {
+                        window.close();
+                    }, 2000);
+                } catch (e) {
+                    console.log('Не удалось закрыть окно автоматически');
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>

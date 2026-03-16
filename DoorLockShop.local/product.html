@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Товар — DoorLockShop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/theme.css">
+    <link rel="stylesheet" href="CSS/auth.css">
+    <style>
+        .product-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+        .product-gallery{position:sticky;top:80px}
+        .gallery-main{background:#f8f9fb;border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;padding:40px;min-height:400px;margin-bottom:16px}
+        .gallery-main img{max-height:340px;object-fit:contain}
+        .gallery-thumbs{display:flex;gap:10px}
+        .gallery-thumb{width:72px;height:72px;border-radius:var(--radius);background:#f8f9fb;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid transparent;transition:var(--transition);padding:8px}
+        .gallery-thumb.active,.gallery-thumb:hover{border-color:var(--primary)}
+        .gallery-thumb img{max-width:100%;max-height:100%;object-fit:contain}
+        .product-detail .pd-brand{font-size:14px;color:var(--primary);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+        .product-detail .pd-name{font-size:28px;font-weight:800;color:var(--dark);margin-bottom:12px;line-height:1.2}
+        .pd-rating{display:flex;align-items:center;gap:8px;margin-bottom:20px;font-size:14px}
+        .pd-rating .stars{color:#ffc107;font-size:16px}
+        .pd-rating .count{color:var(--text-3)}
+        .pd-price-block{display:flex;align-items:baseline;gap:16px;margin-bottom:24px}
+        .pd-price-current{font-size:32px;font-weight:800;color:var(--dark)}
+        .pd-price-old{font-size:18px;color:var(--text-3);text-decoration:line-through}
+        .pd-desc{color:var(--text-2);line-height:1.8;margin-bottom:24px;font-size:15px}
+        .pd-actions{display:flex;gap:12px;margin-bottom:32px}
+        .pd-attrs{border-top:1px solid var(--border);padding-top:24px}
+        .pd-attr-row{display:flex;padding:10px 0;border-bottom:1px solid #f0f2f5;font-size:14px}
+        .pd-attr-name{width:180px;color:var(--text-3);font-weight:500}
+        .pd-attr-value{color:var(--text);font-weight:600}
+        .reviews-section{margin-top:48px}
+        .review-card{background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:24px;margin-bottom:16px}
+        .review-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+        .review-author{font-weight:700;color:var(--dark);font-size:15px}
+        .review-date{font-size:13px;color:var(--text-3)}
+        .review-stars{color:#ffc107;margin-bottom:8px}
+        .review-text{font-size:14px;color:var(--text-2);line-height:1.6}
+        @media(max-width:768px){.product-layout{grid-template-columns:1fr}.product-gallery{position:static}}
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container header-inner">
+        <a href="DoorLocksShop.html" class="header-logo"><img src="IMG/logo.png" alt=""><span>GoldenService</span></a>
+        <nav class="header-nav">
+            <a href="DoorLocksShop.html">Главная</a>
+            <a href="categoty.html" class="active">Каталог</a>
+            <a href="wholesale.html">Оптовая продажа</a>
+            <a href="about.html">О нас</a>
+        </nav>
+        <div class="header-right">
+            <div class="header-phone"><i class="fas fa-phone-alt"></i> +375 (29) 558-84-99</div>
+            <div class="header-icons">
+                <a href="wishlist.html" class="icon-btn-h" title="Избранное"><i class="far fa-heart"></i><span class="badge-count wishlist-badge-count" style="display:none">0</span></a>
+                <button class="icon-btn-h cart-open-btn" title="Корзина"><i class="fas fa-shopping-bag"></i><span class="badge-count cart-badge-count" style="display:none">0</span></button>
+                <div id="authContainer"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-sidebar-head"><h2><i class="fas fa-shopping-bag"></i> Корзина</h2><button class="cart-close-btn">&times;</button></div>
+    <div class="cart-sidebar-body" id="cartSidebarBody"></div>
+    <div class="cart-sidebar-foot" id="cartSidebarFoot"><div class="cart-total-row"><span class="cart-total-label">Итого:</span><span class="cart-total-value">0 BYN</span></div><div class="cart-foot-btns"><a href="buying.html" class="btn btn-primary btn-block">Оформить заказ</a><button class="btn btn-outline btn-block cart-close-btn">Продолжить покупки</button></div></div>
+</div>
+
+<section style="padding-top:32px;padding-bottom:64px">
+    <div class="container">
+        <div class="breadcrumbs"><a href="DoorLocksShop.html">Главная</a><span class="sep">/</span><a href="categoty.html">Каталог</a><span class="sep">/</span><span id="bcCategory">...</span><span class="sep">/</span><span id="bcProduct">...</span></div>
+
+        <div class="product-layout" id="productContent">
+            <div style="text-align:center;padding:80px;color:var(--text-3);grid-column:1/-1"><i class="fas fa-spinner fa-spin" style="font-size:24px"></i></div>
+        </div>
+
+        <div class="reviews-section" id="reviewsSection"></div>
+    </div>
+</section>
+
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div><div class="footer-brand"><i class="fas fa-lock"></i> GoldenService</div><p class="footer-brand-desc">Электронные замки для дома, офиса и бизнеса.</p></div>
+            <div><div class="footer-title">Навигация</div><ul class="footer-links"><li><a href="DoorLocksShop.html">Главная</a></li><li><a href="categoty.html">Каталог</a></li><li><a href="wholesale.html">Оптовая продажа</a></li><li><a href="about.html">О нас</a></li></ul></div>
+            <div><div class="footer-title">Контакты</div><div class="footer-contact"><i class="fas fa-phone"></i> +375 (29) 856-50-38</div></div>
+            <div><div class="footer-title">Информация</div><ul class="footer-links"><li><a href="#">Доставка</a></li><li><a href="#">Гарантии</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">&copy; 2024 GoldenService</div>
+    </div>
+</footer>
+
+<script src="JS/cart.js"></script>
+<script src="JS/wishlist.js"></script>
+<script src="JS/auth.js"></script>
+<script>
+var productId=new URLSearchParams(location.search).get('id');
+if(!productId){document.getElementById('productContent').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:80px"><h2>\u0422\u043e\u0432\u0430\u0440 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d</h2></div>';}
+else {
+fetch('/api/products.php?action=detail&id='+productId)
+    .then(function(r){return r.json()})
+    .then(function(data){
+        if(!data.success)return;
+        var p=data.data.product;
+        document.title=p.name+' \u2014 DoorLockShop';
+        document.getElementById('bcCategory').textContent=p.category_name||'\u041a\u0430\u0442\u0430\u043b\u043e\u0433';
+        document.getElementById('bcProduct').textContent=p.name;
+
+        var mainImg=(p.images&&p.images.length)?p.images[0].path:'IMG/lock1.png';
+        var thumbsHtml='';
+        if(p.images) for(var i=0;i<p.images.length;i++){
+            thumbsHtml+='<div class="gallery-thumb'+(i===0?' active':'')+'" onclick="setMainImg(this,\''+p.images[i].path+'\')"><img src="'+p.images[i].path+'" alt=""></div>';
+        }
+
+        var stars='';for(var s=0;s<5;s++) stars+=s<Math.round(p.rating_avg)?'\u2605':'\u2606';
+        var oldPrice=p.old_price?'<span class="pd-price-old">'+fP(p.old_price)+' BYN</span>':'';
+
+        var attrsHtml='';
+        if(p.attributes&&p.attributes.length){
+            attrsHtml='<div class="pd-attrs">';
+            for(var a=0;a<p.attributes.length;a++){
+                attrsHtml+='<div class="pd-attr-row"><span class="pd-attr-name">'+p.attributes[a].attr_name+'</span><span class="pd-attr-value">'+p.attributes[a].value+'</span></div>';
+            }
+            attrsHtml+='</div>';
+        }
+
+        var html='<div class="product-gallery"><div class="gallery-main" id="galleryMain"><img src="'+mainImg+'" alt=""></div><div class="gallery-thumbs">'+thumbsHtml+'</div></div>'
+            +'<div class="product-detail">'
+            +'<div class="pd-brand">'+(p.brand_name||'')+'</div>'
+            +'<h1 class="pd-name">'+p.name+'</h1>'
+            +'<div class="pd-rating"><span class="stars">'+stars+'</span><span class="count">'+p.rating_count+' \u043e\u0442\u0437\u044b\u0432'+(p.rating_count>4||p.rating_count===0?'\u043e\u0432':p.rating_count>1?'\u0430':'')+'</span></div>'
+            +'<div class="pd-price-block"><span class="pd-price-current">'+fP(p.price)+' BYN</span>'+oldPrice+'</div>'
+            +'<p class="pd-desc">'+(p.description||p.short_desc||'')+'</p>'
+            +'<div class="pd-actions">'
+            +'<button class="btn btn-primary btn-lg" data-add-cart data-id="'+p.id+'" data-name="'+esc(p.name)+'" data-brand="'+(p.brand_name||'')+'" data-price="'+p.price+'" data-image="'+mainImg+'"><i class="fas fa-shopping-bag"></i> \u0412 \u043a\u043e\u0440\u0437\u0438\u043d\u0443</button>'
+            +'<button class="btn btn-outline btn-lg"><i class="far fa-heart"></i> \u0412 \u0438\u0437\u0431\u0440\u0430\u043d\u043d\u043e\u0435</button>'
+            +'</div>'
+            +attrsHtml
+            +'</div>';
+        document.getElementById('productContent').innerHTML=html;
+
+        if(p.reviews&&p.reviews.length){
+            var rhtml='<h2 class="section-title" style="text-align:left">\u041e\u0442\u0437\u044b\u0432\u044b ('+p.reviews.length+')</h2>';
+            for(var r=0;r<p.reviews.length;r++){
+                var rev=p.reviews[r];
+                var rs='';for(var s=0;s<5;s++) rs+=s<rev.rating?'\u2605':'\u2606';
+                rhtml+='<div class="review-card"><div class="review-header"><span class="review-author">'+rev.author_name+'</span><span class="review-date">'+new Date(rev.created_at).toLocaleDateString('ru-RU')+'</span></div><div class="review-stars">'+rs+'</div>'
+                    +(rev.title?'<div style="font-weight:700;margin-bottom:8px">'+rev.title+'</div>':'')
+                    +'<div class="review-text">'+rev.text+'</div></div>';
+            }
+            document.getElementById('reviewsSection').innerHTML=rhtml;
+        }
+    });
+}
+
+function setMainImg(thumb,src){
+    document.querySelector('.gallery-main img').src=src;
+    var all=document.querySelectorAll('.gallery-thumb');
+    for(var i=0;i<all.length;i++) all[i].classList.remove('active');
+    thumb.classList.add('active');
+}
+
+function fP(n){return new Intl.NumberFormat('ru-RU').format(Math.round(n))}
+function esc(s){return String(s).replace(/"/g,'&quot;')}
+</script>
+</body>
+</html>

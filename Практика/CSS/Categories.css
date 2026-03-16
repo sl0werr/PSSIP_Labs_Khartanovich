@@ -1,0 +1,79 @@
+.menu-container{
+    height: 300px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    margin: 0px 0px;
+    max-width: 1600px;
+    padding: 0 150px;
+    position: relative;
+    margin-bottom: 100px;
+
+}
+
+.product-cardR {
+    display: flex;
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    overflow: hidden;
+    position: relative;
+    flex:1;
+
+}
+
+.product-imageR {
+    width: 110%;
+    height: auto;
+    object-fit: cover;
+    margin-left: 170px;
+}
+
+.product-contentR {
+    width: 60%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-titleR {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.product-buttonR {
+    display: inline-block;
+    width: 200px    ;
+    border-color: #333;
+    border-style:outset;
+    padding: 10px 20px;
+    background-color: #00000000;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-weight: 500;
+    text-align: center;
+    transition: background-color 0.3s;
+    align-self: flex-start; /* Выравниваем кнопку по левому краю */
+}
+
+.product-buttonR:hover {
+    background-color: #dddddd;
+}
+
+.ct-btn{
+    background-color: #4295e4;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: lighter;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}

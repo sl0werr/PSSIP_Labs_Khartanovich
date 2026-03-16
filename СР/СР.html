@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="HTML, пример, обучение">
+    <title>Хартанович Никита Иванович</title>
+</head>
+<body style="font-size:14pt; font-family: 'Times New Roman'; background-image: url('фон.webp'); background-size: cover;">
+    <h3 align="right" id="fio">Хартанович Никита Иванович</h3>
+    <p><b><font color="green">Группа: ПЗТ-40</font></b></p>
+    <p align="right"><i>Курс: 3 курс</i></p>
+    <p align="center"><s>Мои увлечения</s></p>
+    
+    <ol type="I" start="7">
+        <li>Зима</li>
+        <li>Весна</li>
+        <li>Лето</li>
+        <li>Осень</li>
+    </ol>
+    
+    <div align="center">
+        <img src="Photo.png" alt="Пример изображения" width="300" height="80">
+        <p>Dodge Viper</p>
+    </div>
+
+    <div align="center">
+        <a href="другая страница.html">
+            <img src="гиперссылка-страница.jpg" alt="Гиперссылка" width="200">
+        </a>
+    </div>
+
+    <a href="#fio">Ссылка на текст ФИО</a>
+
+    <table border="1" cellspacing="0" width="450">
+        <tr>
+            <td align="center" colspan="3" bgcolor="red">
+                Таблица  
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2" width="150">
+                Первый столбик
+            </td>
+            <td bgcolor="lightblue">
+                Второй
+            </td>
+            <td>
+                Третий
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="lightblue">
+                Второй
+            </td>
+            <td>
+                Третий
+            </td>
+        </tr>
+    </table>
+    <h2 align="center">Заказать звонок</h2>
+    <form method="post">
+        <!---->
+        <p align="center" style="font-size: 12pt;">
+            Укажите свой контактный телефон, и <br> мы перезвоним вам в течении 5 минут
+        </p>
+        <p align="center"><input type="text" id="name" name="name" placeholder="Ваше имя" required><br>
+        <input type="tel" id="phone" name="phone" placeholder="Ваш номер телефона*" required></p>
+        <p align="center"><input type="checkbox" id="agreement" name="agreement" required>
+        <label for="agreement" style="font-size: 10pt;">Соглашаюсь на обработку данных</label></p>
+        <p align="center"><button type="submit" style="background-color: brown; color:aliceblue">ПЕРЕЗВОНИТЕ МНЕ</button></p>
+    </form>
+</body>
+</html>

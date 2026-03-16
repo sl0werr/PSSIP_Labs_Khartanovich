@@ -1,0 +1,83 @@
+/* 
+ * Внешний CSS-файл для визитки
+ * Демонстрация каскадности и приоритетов 
+ */
+
+/* Универсальный селектор */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Селектор по ID (пример) */
+#special-element {
+    color: purple !important; /* Демонстрация !important */
+}
+
+/* Стилизация таблицы */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Стилизация ячеек таблицы */
+td, th {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Стилизация заголовков таблицы */
+th {
+    background-color: #3498db;
+    color: white;
+}
+
+/* Четные строки таблицы */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Эффект при наведении на строку таблицы */
+tr:hover {
+    background-color: #e3f2fd;
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .info-table td {
+        display: block;
+        width: 100% !important;
+    }
+    
+    .profile-img {
+        margin: 0 auto 20px;
+        display: block;
+    }
+}
+
+/* Стили для печати */
+@media print {
+    body {
+        background: white;
+        color: black;
+        font-size: 12pt;
+    }
+    
+    .container {
+        box-shadow: none;
+        padding: 0;
+    }
+    
+    button, a[href="#top"] {
+        display: none;
+    }
+}
+

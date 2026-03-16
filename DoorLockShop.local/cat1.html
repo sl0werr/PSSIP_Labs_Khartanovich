@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог товаров — DoorLockShop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/theme.css">
+    <link rel="stylesheet" href="CSS/auth.css">
+    <style>
+        .catalog-layout{display:grid;grid-template-columns:260px 1fr;gap:32px;align-items:start}
+        .filters-panel{background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:24px;position:sticky;top:80px}
+        .filter-title{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:16px}
+        .filter-group{margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+        .filter-group:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+        .filter-label{font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:10px;display:block}
+        .price-range{display:flex;gap:8px;align-items:center}
+        .price-range input{width:100%;padding:8px 10px;border:2px solid var(--border);border-radius:8px;font-size:14px;text-align:center}
+        .price-range input:focus{border-color:var(--primary);outline:none}
+        .sort-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+        .sort-bar select{padding:10px 16px;border:2px solid var(--border);border-radius:var(--radius);font-size:14px;background:var(--white);cursor:pointer}
+        .sort-bar select:focus{border-color:var(--primary);outline:none}
+        .results-count{font-size:14px;color:var(--text-3)}
+        .filter-check{display:flex;align-items:center;gap:8px;margin-bottom:8px;cursor:pointer;font-size:14px;color:var(--text)}
+        .filter-check input{width:16px;height:16px;accent-color:var(--primary)}
+        @media(max-width:768px){.catalog-layout{grid-template-columns:1fr}.filters-panel{position:static}}
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container header-inner">
+        <a href="DoorLocksShop.html" class="header-logo"><img src="IMG/logo.png" alt=""><span>GoldenService</span></a>
+        <nav class="header-nav">
+            <a href="DoorLocksShop.html">Главная</a>
+            <a href="categoty.html" class="active">Каталог</a>
+            <a href="wholesale.html">Оптовая продажа</a>
+            <a href="about.html">О нас</a>
+        </nav>
+        <div class="header-right">
+            <div class="header-phone"><i class="fas fa-phone-alt"></i> +375 (29) 558-84-99</div>
+            <div class="header-icons">
+                <a href="wishlist.html" class="icon-btn-h" title="Избранное"><i class="far fa-heart"></i><span class="badge-count wishlist-badge-count" style="display:none">0</span></a>
+                <button class="icon-btn-h cart-open-btn" title="Корзина"><i class="fas fa-shopping-bag"></i><span class="badge-count cart-badge-count" style="display:none">0</span></button>
+                <div id="authContainer"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-sidebar-head"><h2><i class="fas fa-shopping-bag"></i> Корзина</h2><button class="cart-close-btn">&times;</button></div>
+    <div class="cart-sidebar-body" id="cartSidebarBody"></div>
+    <div class="cart-sidebar-foot" id="cartSidebarFoot"><div class="cart-total-row"><span class="cart-total-label">Итого:</span><span class="cart-total-value">0 BYN</span></div><div class="cart-foot-btns"><a href="buying.html" class="btn btn-primary btn-block">Оформить заказ</a><button class="btn btn-outline btn-block cart-close-btn">Продолжить покупки</button></div></div>
+</div>
+
+<section style="padding-top:32px;padding-bottom:64px">
+    <div class="container">
+        <div class="breadcrumbs"><a href="DoorLocksShop.html">Главная</a><span class="sep">/</span><a href="categoty.html">Каталог</a><span class="sep">/</span><span id="catName">Загрузка...</span></div>
+        <h1 id="pageTitle" style="font-size:28px;font-weight:800;color:var(--dark);margin:16px 0 24px">Каталог</h1>
+
+        <div class="catalog-layout">
+            <aside class="filters-panel" id="filtersPanel">
+                <div class="filter-title"><i class="fas fa-sliders-h"></i> Фильтры</div>
+                <div class="filter-group">
+                    <div class="filter-label">Цена, BYN</div>
+                    <div class="price-range">
+                        <input type="number" id="priceMin" placeholder="От">
+                        <span style="color:var(--text-3)">&mdash;</span>
+                        <input type="number" id="priceMax" placeholder="До">
+                    </div>
+                </div>
+                <div id="dynamicFilters"></div>
+                <button class="btn btn-primary btn-block btn-sm" style="margin-top:16px" onclick="loadProducts()"><i class="fas fa-search"></i> Применить</button>
+                <button class="btn btn-outline btn-block btn-sm" style="margin-top:8px" onclick="resetFilters()">Сбросить</button>
+            </aside>
+
+            <div>
+                <div class="sort-bar">
+                    <span class="results-count" id="resultsCount"></span>
+                    <select id="sortSelect" onchange="loadProducts()">
+                        <option value="popular">По популярности</option>
+                        <option value="price_asc">Сначала дешёвые</option>
+                        <option value="price_desc">Сначала дорогие</option>
+                        <option value="new">Новинки</option>
+                        <option value="rating">По рейтингу</option>
+                    </select>
+                </div>
+                <div class="products-grid" id="productsGrid">
+                    <div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-3)"><i class="fas fa-spinner fa-spin" style="font-size:24px"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div><div class="footer-brand"><i class="fas fa-lock"></i> GoldenService</div><p class="footer-brand-desc">Электронные замки для дома, офиса и бизнеса.</p></div>
+            <div><div class="footer-title">Навигация</div><ul class="footer-links"><li><a href="DoorLocksShop.html">Главная</a></li><li><a href="categoty.html">Каталог</a></li><li><a href="wholesale.html">Оптовая продажа</a></li><li><a href="about.html">О нас</a></li></ul></div>
+            <div><div class="footer-title">Контакты</div><div class="footer-contact"><i class="fas fa-phone"></i> +375 (29) 856-50-38</div></div>
+            <div><div class="footer-title">Информация</div><ul class="footer-links"><li><a href="#">Доставка</a></li><li><a href="#">Гарантии</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">&copy; 2024 GoldenService</div>
+    </div>
+</footer>
+
+<script src="JS/cart.js"></script>
+<script src="JS/auth.js"></script>
+<script>
+var catId=new URLSearchParams(location.search).get('cat')||'';
+var currentBrands=[];
+
+function loadProducts(){
+    var sort=document.getElementById('sortSelect').value;
+    var minP=document.getElementById('priceMin').value;
+    var maxP=document.getElementById('priceMax').value;
+    var url='/api/products.php?action=list&per_page=24&sort='+sort;
+    if(catId) url+='&category_id='+catId;
+    if(minP) url+='&min_price='+minP;
+    if(maxP) url+='&max_price='+maxP;
+
+    fetch(url).then(function(r){return r.json()}).then(function(data){
+        var grid=document.getElementById('productsGrid');
+        if(!data.success){
+            grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-3)">Ошибка загрузки</div>';
+            return;
+        }
+        document.getElementById('resultsCount').textContent=data.data.total+' товар'+(data.data.total>4||data.data.total===0?'ов':data.data.total>1?'а':'');
+        if(data.data.products.length===0){
+            grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-3)"><i class="fas fa-box-open" style="font-size:48px;display:block;margin-bottom:12px;color:#ddd"></i>Товары не найдены</div>';
+            return;
+        }
+        var html='';
+        var products=data.data.products;
+        for(var i=0;i<products.length;i++){
+            var p=products[i];
+            var img=p.main_image||'IMG/lock'+(i%4+1)+'.png';
+            var oldP=p.old_price?'<span class="pc-price-old">'+fP(p.old_price)+' BYN</span>':'';
+            var badges='';
+            if(p.tags){for(var t=0;t<p.tags.length;t++){
+                var tag=p.tags[t];
+                badges+='<span class="pc-badge" style="background:'+tag.color+'">'+tag.name+'</span>';
+            }}
+            var stars='';for(var s=0;s<5;s++) stars+=s<Math.round(p.rating_avg)?'\u2605':'\u2606';
+            html+='<div class="product-card-grid">'
+                +'<div class="pc-badges">'+badges+'</div>'
+                +'<a href="product.html?id='+p.id+'" class="pc-image" style="text-decoration:none"><img src="'+img+'" alt=""></a>'
+                +'<div class="pc-body">'
+                +'<div class="pc-brand">'+(p.brand_name||'')+'</div>'
+                +'<a href="product.html?id='+p.id+'" class="pc-name" style="text-decoration:none;color:var(--text)">'+p.name+'</a>'
+                +'<div class="pc-rating"><span class="stars">'+stars+'</span><span class="count">('+p.rating_count+')</span></div>'
+                +'<div class="pc-price"><span class="pc-price-current">'+fP(p.price)+' BYN</span>'+oldP+'</div>'
+                +'<div class="pc-actions">'
+                +'<button class="btn btn-primary btn-sm" data-add-cart data-id="'+p.id+'" data-name="'+esc(p.name)+'" data-brand="'+(p.brand_name||'')+'" data-price="'+p.price+'" data-image="'+img+'"><i class="fas fa-shopping-bag"></i> \u0412 \u043a\u043e\u0440\u0437\u0438\u043d\u0443</button>'
+                +'<button class="pc-fav"><i class="far fa-heart"></i></button>'
+                +'</div></div></div>';
+        }
+        grid.innerHTML=html;
+    }).catch(function(){
+        document.getElementById('productsGrid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-3)">Ошибка загрузки</div>';
+    });
+}
+
+function loadFilters(){
+    if(!catId)return;
+    fetch('/api/categories.php?action=filters&category_id='+catId)
+        .then(function(r){return r.json()})
+        .then(function(data){
+            if(!data.success)return;
+            var d=data.data;
+            if(d.price_range){
+                document.getElementById('priceMin').placeholder=fP(d.price_range.min_price);
+                document.getElementById('priceMax').placeholder=fP(d.price_range.max_price);
+            }
+            if(d.brands&&d.brands.length){
+                var bhtml='<div class="filter-group"><div class="filter-label">\u0411\u0440\u0435\u043d\u0434</div>';
+                for(var i=0;i<d.brands.length;i++){
+                    bhtml+='<label class="filter-check"><input type="checkbox" value="'+d.brands[i].id+'"> '+d.brands[i].name+'</label>';
+                }
+                bhtml+='</div>';
+                document.getElementById('dynamicFilters').innerHTML=bhtml;
+            }
+        });
+}
+
+function loadCategoryInfo(){
+    if(!catId)return;
+    fetch('/api/categories.php?action=detail&id='+catId)
+        .then(function(r){return r.json()})
+        .then(function(data){
+            if(!data.success)return;
+            var c=data.data.category;
+            document.getElementById('catName').textContent=c.name;
+            document.getElementById('pageTitle').textContent=c.name;
+            document.title=c.name+' \u2014 DoorLockShop';
+        });
+}
+
+function resetFilters(){
+    document.getElementById('priceMin').value='';
+    document.getElementById('priceMax').value='';
+    var checks=document.querySelectorAll('#dynamicFilters input[type=checkbox]');
+    for(var i=0;i<checks.length;i++) checks[i].checked=false;
+    loadProducts();
+}
+
+function fP(n){return new Intl.NumberFormat('ru-RU').format(Math.round(n))}
+function esc(s){return String(s).replace(/"/g,'&quot;')}
+
+loadCategoryInfo();
+loadFilters();
+loadProducts();
+</script>
+</body>
+</html>

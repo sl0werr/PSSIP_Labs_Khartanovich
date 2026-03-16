@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О нас — DoorLockShop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/theme.css">
+    <link rel="stylesheet" href="CSS/auth.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container header-inner">
+        <a href="DoorLocksShop.html" class="header-logo"><img src="IMG/logo.png" alt=""><span>GoldenService</span></a>
+        <nav class="header-nav">
+            <a href="DoorLocksShop.html">Главная</a>
+            <a href="categoty.html">Каталог</a>
+            <a href="wholesale.html">Оптовая продажа</a>
+            <a href="about.html" class="active">О нас</a>
+        </nav>
+        <div class="header-right">
+            <div class="header-phone"><i class="fas fa-phone-alt"></i> +375 (29) 558-84-99</div>
+            <div class="header-icons">
+                <a href="wishlist.html" class="icon-btn-h" title="Избранное"><i class="far fa-heart"></i><span class="badge-count wishlist-badge-count" style="display:none">0</span></a>
+                <button class="icon-btn-h cart-open-btn" title="Корзина"><i class="fas fa-shopping-bag"></i><span class="badge-count cart-badge-count" style="display:none">0</span></button>
+                <div id="authContainer"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-sidebar-head"><h2><i class="fas fa-shopping-bag"></i> Корзина</h2><button class="cart-close-btn">&times;</button></div>
+    <div class="cart-sidebar-body" id="cartSidebarBody"></div>
+    <div class="cart-sidebar-foot" id="cartSidebarFoot"><div class="cart-total-row"><span class="cart-total-label">Итого:</span><span class="cart-total-value">0 BYN</span></div><div class="cart-foot-btns"><a href="buying.html" class="btn btn-primary btn-block">Оформить заказ</a><button class="btn btn-outline btn-block cart-close-btn">Продолжить покупки</button></div></div>
+</div>
+
+<section style="padding-top:32px">
+    <div class="container">
+        <div class="breadcrumbs"><a href="DoorLocksShop.html">Главная</a><span class="sep">/</span><span>О нас</span></div>
+    </div>
+</section>
+
+<!-- HERO -->
+<section style="padding:24px 0 48px">
+    <div class="container">
+        <div style="background:linear-gradient(135deg,var(--dark),var(--dark-2));border-radius:var(--radius-xl);padding:64px 48px;color:#fff;text-align:center">
+            <h1 style="font-size:36px;font-weight:800;margin-bottom:16px">О компании GoldenService</h1>
+            <p style="font-size:18px;opacity:0.85;max-width:700px;margin:0 auto;line-height:1.6">Мы — ведущий поставщик электронных замков в Республике Беларусь. Более 20 лет помогаем обеспечивать безопасность дома, офиса и бизнеса.</p>
+        </div>
+    </div>
+</section>
+
+<!-- STORY -->
+<section style="padding:0 0 64px">
+    <div class="container">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-bottom:64px">
+            <div>
+                <h2 style="font-size:28px;font-weight:800;color:var(--dark);margin-bottom:16px">Наша история</h2>
+                <p style="color:var(--text-2);line-height:1.8;margin-bottom:16px">Компания GoldenService была основана в 2004 году в Минске. Начав с небольшого офиса и трёх моделей электронных замков, за 20 лет мы выросли в крупнейшего дистрибьютора на территории Беларуси.</p>
+                <p style="color:var(--text-2);line-height:1.8;margin-bottom:16px">Мы сотрудничаем с ведущими мировыми производителями — Golden Soft, Samsung, Yale, Xiaomi — и предлагаем широкий ассортимент решений от бюджетных моделей до премиальных систем контроля доступа.</p>
+                <p style="color:var(--text-2);line-height:1.8">Наши замки установлены в более чем 500 отелях, 1 200 офисных зданиях и десятках тысяч квартир по всей стране.</p>
+            </div>
+            <div style="background:linear-gradient(135deg,var(--primary-light),#ede7f6);border-radius:var(--radius-xl);padding:48px;text-align:center">
+                <i class="fas fa-shield-alt" style="font-size:80px;color:var(--primary);margin-bottom:20px;display:block"></i>
+                <div style="font-size:16px;font-weight:700;color:var(--dark)">Надёжность и безопасность — наш приоритет</div>
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:64px">
+            <div class="card" style="padding:32px;text-align:center"><div style="font-size:36px;font-weight:800;color:var(--primary)">20+</div><div style="font-size:14px;color:var(--text-2);margin-top:8px">Лет на рынке</div></div>
+            <div class="card" style="padding:32px;text-align:center"><div style="font-size:36px;font-weight:800;color:var(--accent)">5 500+</div><div style="font-size:14px;color:var(--text-2);margin-top:8px">Довольных клиентов</div></div>
+            <div class="card" style="padding:32px;text-align:center"><div style="font-size:36px;font-weight:800;color:var(--success)">1 200+</div><div style="font-size:14px;color:var(--text-2);margin-top:8px">Моделей замков</div></div>
+            <div class="card" style="padding:32px;text-align:center"><div style="font-size:36px;font-weight:800;color:var(--warning)">24/7</div><div style="font-size:14px;color:var(--text-2);margin-top:8px">Техническая поддержка</div></div>
+        </div>
+
+        <!-- VALUES -->
+        <h2 class="section-title">Наши ценности</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-bottom:64px">
+            <div class="card" style="padding:32px">
+                <div style="width:56px;height:56px;border-radius:14px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;margin-bottom:16px"><i class="fas fa-gem" style="font-size:24px;color:var(--primary)"></i></div>
+                <h3 style="font-size:18px;font-weight:700;color:var(--dark);margin-bottom:8px">Качество</h3>
+                <p style="font-size:14px;color:var(--text-2);line-height:1.6">Каждый замок проходит многоступенчатый контроль качества. Мы даём гарантию 3 года на всю продукцию и возвращаем удвоенную стоимость при обнаружении брака.</p>
+            </div>
+            <div class="card" style="padding:32px">
+                <div style="width:56px;height:56px;border-radius:14px;background:#ede7f6;display:flex;align-items:center;justify-content:center;margin-bottom:16px"><i class="fas fa-users" style="font-size:24px;color:var(--accent)"></i></div>
+                <h3 style="font-size:18px;font-weight:700;color:var(--dark);margin-bottom:8px">Клиентоориентированность</h3>
+                <p style="font-size:14px;color:var(--text-2);line-height:1.6">Персональный менеджер для каждого корпоративного клиента. Бесплатные консультации по подбору замковых систем для любых задач.</p>
+            </div>
+            <div class="card" style="padding:32px">
+                <div style="width:56px;height:56px;border-radius:14px;background:#e8f5e9;display:flex;align-items:center;justify-content:center;margin-bottom:16px"><i class="fas fa-tools" style="font-size:24px;color:var(--success)"></i></div>
+                <h3 style="font-size:18px;font-weight:700;color:var(--dark);margin-bottom:8px">Сервис</h3>
+                <p style="font-size:14px;color:var(--text-2);line-height:1.6">Профессиональная установка и настройка замков. Выезд мастера по Минску и области в день заказа. Обслуживание по всей Беларуси.</p>
+            </div>
+        </div>
+
+        <!-- TEAM -->
+        <h2 class="section-title">Наша команда</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;margin-bottom:64px">
+            <div class="card" style="padding:24px;text-align:center"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:28px;font-weight:700;margin-bottom:12px">АМ</div><div style="font-weight:700;color:var(--dark)">Алексей Михайлов</div><div style="font-size:13px;color:var(--primary)">Генеральный директор</div></div>
+            <div class="card" style="padding:24px;text-align:center"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--success),#26c6da);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:28px;font-weight:700;margin-bottom:12px">ЕК</div><div style="font-weight:700;color:var(--dark)">Елена Козлова</div><div style="font-size:13px;color:var(--primary)">Руководитель отдела продаж</div></div>
+            <div class="card" style="padding:24px;text-align:center"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--warning),#ff7043);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:28px;font-weight:700;margin-bottom:12px">ДС</div><div style="font-weight:700;color:var(--dark)">Дмитрий Соколов</div><div style="font-size:13px;color:var(--primary)">Технический директор</div></div>
+            <div class="card" style="padding:24px;text-align:center"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#e91e63,var(--accent));display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:28px;font-weight:700;margin-bottom:12px">ОН</div><div style="font-weight:700;color:var(--dark)">Ольга Новикова</div><div style="font-size:13px;color:var(--primary)">Менеджер по работе с клиентами</div></div>
+        </div>
+
+        <!-- CONTACTS -->
+        <h2 class="section-title">Контакты</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px">
+            <div class="card" style="padding:32px">
+                <h3 style="font-size:18px;font-weight:700;color:var(--dark);margin-bottom:20px">Свяжитесь с нами</h3>
+                <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px"><div style="width:44px;height:44px;border-radius:12px;background:var(--primary-light);display:flex;align-items:center;justify-content:center"><i class="fas fa-map-marker-alt" style="color:var(--primary)"></i></div><div><div style="font-size:13px;color:var(--text-3)">Адрес</div><div style="font-weight:600">г. Минск, ул. Немига 5, офис 301</div></div></div>
+                <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px"><div style="width:44px;height:44px;border-radius:12px;background:var(--primary-light);display:flex;align-items:center;justify-content:center"><i class="fas fa-phone" style="color:var(--primary)"></i></div><div><div style="font-size:13px;color:var(--text-3)">Телефон</div><div style="font-weight:600">+375 (29) 558-84-99</div><div style="font-weight:600">+375 (29) 856-50-38</div></div></div>
+                <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px"><div style="width:44px;height:44px;border-radius:12px;background:var(--primary-light);display:flex;align-items:center;justify-content:center"><i class="fas fa-envelope" style="color:var(--primary)"></i></div><div><div style="font-size:13px;color:var(--text-3)">Email</div><div style="font-weight:600">info@goldenservice.by</div></div></div>
+                <div style="display:flex;align-items:center;gap:14px"><div style="width:44px;height:44px;border-radius:12px;background:var(--primary-light);display:flex;align-items:center;justify-content:center"><i class="fas fa-clock" style="color:var(--primary)"></i></div><div><div style="font-size:13px;color:var(--text-3)">Режим работы</div><div style="font-weight:600">Пн-Пт: 9:00 - 18:00</div><div style="font-weight:600">Сб: 10:00 - 15:00</div></div></div>
+            </div>
+            <div class="card" style="padding:0;overflow:hidden;border-radius:var(--radius-lg)">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2350.4!2d27.554!3d53.904!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTPCsDU0JzE0LjQiTiAyN8KwMzMnMTQuNCJF!5e0!3m2!1sru!2sby!4v1" width="100%" height="100%" style="border:0;min-height:380px" allowfullscreen loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div><div class="footer-brand"><i class="fas fa-lock"></i> GoldenService</div><p class="footer-brand-desc">Электронные замки по всей Беларуси.</p></div>
+            <div><div class="footer-title">Навигация</div><ul class="footer-links"><li><a href="DoorLocksShop.html">Главная</a></li><li><a href="categoty.html">Каталог</a></li><li><a href="wholesale.html">Оптовая продажа</a></li><li><a href="about.html">О нас</a></li></ul></div>
+            <div><div class="footer-title">Контакты</div><div class="footer-contact"><i class="fas fa-phone"></i> +375 (29) 856-50-38</div><div class="footer-contact"><i class="fas fa-envelope"></i> info@goldenservice.by</div></div>
+            <div><div class="footer-title">Информация</div><ul class="footer-links"><li><a href="#">Доставка</a></li><li><a href="#">Гарантии</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">&copy; 2024 GoldenService</div>
+    </div>
+</footer>
+
+<script src="JS/cart.js"></script>
+<script src="JS/wishlist.js"></script>
+<script src="JS/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ВАРИАНТ №19 (GRID верстка)</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+        
+        .template {
+            display: grid;
+            grid-template-areas:
+                "header header header"
+                "block1 block4 block4"
+                "block2 block4 block4"
+                "block3 block4 block4"
+                "footer footer footer";
+            grid-template-rows: 100px auto auto auto 100px;
+            grid-template-columns: 30% 70%;
+            width: 100%;
+            min-height: 100vh;
+            border: 2px solid #333;
+            box-sizing: border-box;
+        }
+        
+        .block {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+        
+        .block-1 {
+            grid-area: block1;
+            background-color: #FF9999;
+            height: 293px;
+        }
+        
+        .block-2 {
+            grid-area: block2;
+            background-color: #99FF99;
+            height: 293px;
+        }
+        
+        .block-3 {
+            grid-area: block3;
+            background-color: #9999FF;
+            height: 293px;
+        }
+        
+        .block-4 {
+            grid-area: block4;
+            background-color: #FFFF99;
+            min-height: 294px;
+        }
+        
+        .block-6 {
+            grid-area: header;
+            background-color: #99FFFF;
+        }
+        
+        .block-5 {
+            grid-area: footer;
+            background-color: #FF99FF;
+        }
+        
+        .block-3 img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="template">
+        <div class="block block-6">шапка</div>
+        <div class="block block-1">1</div>
+        <div class="block block-2">2</div>
+        <div class="block block-3"><img src="Лого.png" alt="Логотип"></div>
+        <div class="block block-4">4</div>
+        <div class="block block-5">подвал</div>
+    </div>
+</body>
+</html>

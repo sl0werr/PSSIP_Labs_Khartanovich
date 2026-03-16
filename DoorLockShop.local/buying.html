@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оформление заказа — DoorLockShop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/theme.css">
+    <link rel="stylesheet" href="CSS/auth.css">
+    <style>
+        .checkout-layout{display:grid;grid-template-columns:1fr 380px;gap:32px;align-items:start}
+        .checkout-section{background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:28px;margin-bottom:24px}
+        .checkout-section h2{font-size:18px;font-weight:700;color:var(--dark);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+        .checkout-section h2 .step{width:28px;height:28px;background:var(--primary);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+        .form-group{margin-bottom:16px}
+        .radio-cards{display:flex;flex-direction:column;gap:10px}
+        .radio-card{display:flex;align-items:center;gap:14px;padding:14px 18px;border:2px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:var(--transition)}
+        .radio-card:hover{border-color:var(--primary-light)}
+        .radio-card.active{border-color:var(--primary);background:var(--primary-light)}
+        .radio-card input{display:none}
+        .radio-dot{width:20px;height:20px;border:2px solid var(--border);border-radius:50%;position:relative;flex-shrink:0;transition:var(--transition)}
+        .radio-card.active .radio-dot{border-color:var(--primary)}
+        .radio-card.active .radio-dot::after{content:'';position:absolute;top:4px;left:4px;width:8px;height:8px;background:var(--primary);border-radius:50%}
+        .radio-card-label{font-size:15px;font-weight:500}
+        .radio-card-desc{font-size:12px;color:var(--text-3);margin-top:2px}
+        .order-summary-card{position:sticky;top:80px;background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:24px}
+        .summary-title{font-size:18px;font-weight:700;color:var(--dark);margin-bottom:20px}
+        .summary-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #f0f2f5}
+        .summary-item:last-child{border-bottom:none}
+        .summary-item-img{width:56px;height:56px;border-radius:8px;background:#f8f9fb;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .summary-item-img img{max-width:40px;max-height:40px;object-fit:contain}
+        .summary-item-info{flex:1;min-width:0}
+        .summary-item-name{font-size:13px;font-weight:600;color:var(--text);line-height:1.3}
+        .summary-item-qty{font-size:12px;color:var(--text-3);margin-top:2px}
+        .summary-item-price{font-size:14px;font-weight:700;color:var(--dark);white-space:nowrap}
+        .summary-divider{height:1px;background:var(--border);margin:16px 0}
+        .summary-row{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;color:var(--text-2)}
+        .summary-total{display:flex;justify-content:space-between;font-size:20px;font-weight:800;color:var(--dark);margin-top:12px;padding-top:12px;border-top:2px solid var(--border)}
+        @media(max-width:768px){.checkout-layout{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container header-inner">
+        <a href="DoorLocksShop.html" class="header-logo"><img src="IMG/logo.png" alt=""><span>GoldenService</span></a>
+        <nav class="header-nav">
+            <a href="DoorLocksShop.html">Главная</a>
+            <a href="categoty.html">Каталог</a>
+            <a href="wholesale.html">Оптовая продажа</a>
+            <a href="about.html">О нас</a>
+        </nav>
+        <div class="header-right">
+            <div class="header-phone"><i class="fas fa-phone-alt"></i> +375 (29) 558-84-99</div>
+            <div class="header-icons">
+                <a href="wishlist.html" class="icon-btn-h" title="Избранное"><i class="far fa-heart"></i><span class="badge-count wishlist-badge-count" style="display:none">0</span></a>
+                <button class="icon-btn-h cart-open-btn" title="Корзина"><i class="fas fa-shopping-bag"></i><span class="badge-count cart-badge-count" style="display:none">0</span></button>
+                <div id="authContainer"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-sidebar-head"><h2><i class="fas fa-shopping-bag"></i> Корзина</h2><button class="cart-close-btn">&times;</button></div>
+    <div class="cart-sidebar-body" id="cartSidebarBody"></div>
+    <div class="cart-sidebar-foot" id="cartSidebarFoot"><div class="cart-total-row"><span class="cart-total-label">Итого:</span><span class="cart-total-value">0 BYN</span></div><div class="cart-foot-btns"><a href="buying.html" class="btn btn-primary btn-block">Оформить заказ</a><button class="btn btn-outline btn-block cart-close-btn">Продолжить покупки</button></div></div>
+</div>
+
+<section style="padding-top:32px;padding-bottom:64px">
+    <div class="container">
+        <div class="breadcrumbs"><a href="DoorLocksShop.html">Главная</a><span class="sep">/</span><span>Оформление заказа</span></div>
+        <h1 style="font-size:28px;font-weight:800;color:var(--dark);margin:16px 0 28px">Оформление заказа</h1>
+
+        <div class="checkout-layout">
+            <div>
+                <div class="checkout-section">
+                    <h2><span class="step">1</span> Контактные данные</h2>
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">Фамилия</label><input class="form-input" id="lastName" placeholder="Иванов"></div>
+                        <div class="form-group"><label class="form-label">Имя</label><input class="form-input" id="firstName" placeholder="Иван"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label class="form-label">Телефон</label><input class="form-input" id="phone" type="tel" placeholder="+375 (__) ___-__-__"></div>
+                        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="email" type="email" placeholder="example@mail.ru"></div>
+                    </div>
+                </div>
+
+                <div class="checkout-section">
+                    <h2><span class="step">2</span> Доставка</h2>
+                    <div class="radio-cards" id="deliveryCards">
+                        <label class="radio-card active" onclick="selectRadio(this)">
+                            <input type="radio" name="delivery" value="europochta" checked>
+                            <div class="radio-dot"></div>
+                            <div><div class="radio-card-label">Европочта</div><div class="radio-card-desc">Доставка 2-5 дней, от 8 BYN</div></div>
+                        </label>
+                        <label class="radio-card" onclick="selectRadio(this)">
+                            <input type="radio" name="delivery" value="belpost">
+                            <div class="radio-dot"></div>
+                            <div><div class="radio-card-label">Белпочта</div><div class="radio-card-desc">Доставка 5-10 дней, от 5 BYN</div></div>
+                        </label>
+                        <label class="radio-card" onclick="selectRadio(this)">
+                            <input type="radio" name="delivery" value="courier">
+                            <div class="radio-dot"></div>
+                            <div><div class="radio-card-label">Курьерская доставка</div><div class="radio-card-desc">Доставка 1-3 дня, от 10 BYN</div></div>
+                        </label>
+                    </div>
+                    <div style="margin-top:16px">
+                        <div class="form-group"><label class="form-label">Адрес доставки</label><input class="form-input" id="address" placeholder="Город, улица, дом, квартира"></div>
+                    </div>
+                </div>
+
+                <div class="checkout-section">
+                    <h2><span class="step">3</span> Оплата</h2>
+                    <div class="radio-cards" id="paymentCards">
+                        <label class="radio-card active" onclick="selectRadio(this)">
+                            <input type="radio" name="payment" value="cash" checked>
+                            <div class="radio-dot"></div>
+                            <div><div class="radio-card-label">При получении</div><div class="radio-card-desc">Наличными или картой</div></div>
+                        </label>
+                        <label class="radio-card" onclick="selectRadio(this)">
+                            <input type="radio" name="payment" value="card">
+                            <div class="radio-dot"></div>
+                            <div><div class="radio-card-label">Банковская карта</div><div class="radio-card-desc">Visa, Mastercard, МИР</div></div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="checkout-section">
+                    <h2><span class="step">4</span> Комментарий</h2>
+                    <textarea class="form-input" id="comment" rows="3" placeholder="Пожелания к заказу..." style="resize:vertical"></textarea>
+                </div>
+            </div>
+
+            <div>
+                <div class="order-summary-card">
+                    <div class="summary-title"><i class="fas fa-receipt"></i> Ваш заказ</div>
+                    <div id="summaryItems"></div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row"><span>Товары</span><span id="summarySubtotal">0 BYN</span></div>
+                    <div class="summary-row"><span>Доставка</span><span id="summaryDelivery">8 BYN</span></div>
+                    <div class="summary-total"><span>Итого</span><span id="summaryTotal">0 BYN</span></div>
+                    <button class="btn btn-primary btn-block btn-lg" style="margin-top:20px" id="submitOrder"><i class="fas fa-check"></i> Подтвердить заказ</button>
+                    <p style="font-size:12px;color:var(--text-3);margin-top:12px;text-align:center">Нажимая кнопку, вы соглашаетесь с условиями пользовательского соглашения</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div><div class="footer-brand"><i class="fas fa-lock"></i> GoldenService</div><p class="footer-brand-desc">Электронные замки для дома, офиса и бизнеса.</p></div>
+            <div><div class="footer-title">Навигация</div><ul class="footer-links"><li><a href="DoorLocksShop.html">Главная</a></li><li><a href="categoty.html">Каталог</a></li><li><a href="wholesale.html">Оптовая продажа</a></li><li><a href="about.html">О нас</a></li></ul></div>
+            <div><div class="footer-title">Контакты</div><div class="footer-contact"><i class="fas fa-phone"></i> +375 (29) 856-50-38</div></div>
+            <div><div class="footer-title">Информация</div><ul class="footer-links"><li><a href="#">Доставка</a></li><li><a href="#">Гарантии</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">&copy; 2024 GoldenService</div>
+    </div>
+</footer>
+
+<script src="JS/cart.js"></script>
+<script src="JS/wishlist.js"></script>
+<script src="JS/auth.js"></script>
+<script>
+function selectRadio(el){
+    var parent=el.parentElement;
+    var cards=parent.querySelectorAll('.radio-card');
+    for(var i=0;i<cards.length;i++) cards[i].classList.remove('active');
+    el.classList.add('active');
+    el.querySelector('input').checked=true;
+}
+
+function fP(n){return new Intl.NumberFormat('ru-RU').format(Math.round(n))+' BYN'}
+
+function renderSummary(){
+    var items=[];
+    try{items=JSON.parse(localStorage.getItem('cart_items'))||[];}catch(e){}
+    var container=document.getElementById('summaryItems');
+    if(!items.length){
+        container.innerHTML='<div style="text-align:center;padding:24px;color:var(--text-3)"><i class="fas fa-shopping-bag" style="font-size:32px;display:block;margin-bottom:8px;color:#ddd"></i>\u041a\u043e\u0440\u0437\u0438\u043d\u0430 \u043f\u0443\u0441\u0442\u0430</div>';
+        return;
+    }
+    var html='';
+    var subtotal=0;
+    for(var i=0;i<items.length;i++){
+        var it=items[i];
+        subtotal+=it.price*it.qty;
+        var imgTag=it.image?'<img src="'+it.image+'" alt="">':'<i class="fas fa-lock" style="color:#ccc"></i>';
+        html+='<div class="summary-item">'
+            +'<div class="summary-item-img">'+imgTag+'</div>'
+            +'<div class="summary-item-info"><div class="summary-item-name">'+it.name+'</div><div class="summary-item-qty">'+it.qty+' \u0448\u0442.</div></div>'
+            +'<div class="summary-item-price">'+fP(it.price*it.qty)+'</div>'
+            +'</div>';
+    }
+    container.innerHTML=html;
+    var delivery=8;
+    document.getElementById('summarySubtotal').textContent=fP(subtotal);
+    document.getElementById('summaryDelivery').textContent=fP(delivery);
+    document.getElementById('summaryTotal').textContent=fP(subtotal+delivery);
+}
+
+document.getElementById('submitOrder').addEventListener('click',function(){
+    var btn=this;
+    var items=[];
+    try{items=JSON.parse(localStorage.getItem('cart_items'))||[];}catch(e){}
+    if(!items.length){alert('\u041a\u043e\u0440\u0437\u0438\u043d\u0430 \u043f\u0443\u0441\u0442\u0430');return;}
+    var token=localStorage.getItem('auth_token')||'';
+    if(!token){alert('\u0412\u043e\u0439\u0434\u0438\u0442\u0435 \u0432 \u0430\u043a\u043a\u0430\u0443\u043d\u0442 \u0434\u043b\u044f \u043e\u0444\u043e\u0440\u043c\u043b\u0435\u043d\u0438\u044f \u0437\u0430\u043a\u0430\u0437\u0430');return;}
+
+    var cartItems=[];
+    for(var i=0;i<items.length;i++) cartItems.push({product_id:items[i].id,quantity:items[i].qty});
+
+    btn.disabled=true;
+    btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> \u041e\u0444\u043e\u0440\u043c\u043b\u044f\u0435\u043c...';
+
+    fetch('/api/orders.php?action=create',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+        body:JSON.stringify({
+            items:cartItems,
+            first_name:document.getElementById('firstName').value,
+            last_name:document.getElementById('lastName').value,
+            email:document.getElementById('email').value,
+            phone:document.getElementById('phone').value,
+            delivery_method:document.querySelector('input[name=delivery]:checked').value,
+            payment_method:document.querySelector('input[name=payment]:checked').value,
+            address:document.getElementById('address').value,
+            comment:document.getElementById('comment').value
+        })
+    }).then(function(r){return r.json()}).then(function(data){
+        if(data.success){
+            localStorage.removeItem('cart_items');
+            document.querySelector('.checkout-layout').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:80px 20px"><div style="width:80px;height:80px;background:#e8f5e9;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:24px"><i class="fas fa-check" style="font-size:36px;color:var(--success)"></i></div><h2 style="font-size:24px;font-weight:800;color:var(--dark);margin-bottom:12px">\u0417\u0430\u043a\u0430\u0437 \u043e\u0444\u043e\u0440\u043c\u043b\u0435\u043d!</h2><p style="color:var(--text-2);margin-bottom:24px">\u041d\u043e\u043c\u0435\u0440 \u0437\u0430\u043a\u0430\u0437\u0430: <b>#'+data.data.order_id+'</b></p><a href="DoorLocksShop.html" class="btn btn-primary">\u041d\u0430 \u0433\u043b\u0430\u0432\u043d\u0443\u044e</a></div>';
+            Cart.items=[];Cart.save();Cart.renderSidebar();
+        } else {
+            alert(data.error||'\u041e\u0448\u0438\u0431\u043a\u0430 \u043e\u0444\u043e\u0440\u043c\u043b\u0435\u043d\u0438\u044f');
+            btn.disabled=false;
+            btn.innerHTML='<i class="fas fa-check"></i> \u041f\u043e\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u044c \u0437\u0430\u043a\u0430\u0437';
+        }
+    }).catch(function(){
+        btn.disabled=false;
+        btn.innerHTML='<i class="fas fa-check"></i> \u041f\u043e\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u044c \u0437\u0430\u043a\u0430\u0437';
+    });
+});
+
+var user=null;
+try{user=JSON.parse(localStorage.getItem('auth_user'));}catch(e){}
+if(user){
+    document.getElementById('firstName').value=user.first_name||'';
+    document.getElementById('lastName').value=user.last_name||'';
+    if(user.email) document.getElementById('email').value=user.email;
+    if(user.phone) document.getElementById('phone').value=user.phone;
+}
+
+renderSummary();
+</script>
+</body>
+</html>

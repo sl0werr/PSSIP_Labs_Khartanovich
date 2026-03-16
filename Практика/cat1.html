@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог электронных замков</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/footer.css">
+    <link rel="stylesheet" href="CSS/top.css">
+    <link rel="stylesheet" href="CSS/header.css">
+    <link rel="stylesheet" href="cart.js">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Times New Roman', Times, serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        main {
+            margin-top: 100px;
+            flex: 1;
+            padding: 20px;
+        }
+        
+        .container {
+            display: flex;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .filters-column {
+            flex: 0 0 280px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .products-column {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .breadcrumbs {
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .breadcrumbs a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .breadcrumbs a:hover {
+            color: #2c80ff;
+            text-decoration: underline;
+        }
+        
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .category-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+        }
+        
+        .product-count {
+            color: #666;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .reset-filters {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .reset-filters:hover {
+            background-color: #e8e8e8;
+            transform: translateY(-1px);
+        }
+        
+        .filter-section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .filter-section:last-child {
+            border-bottom: none;
+        }
+        
+        .filter-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .price-filter {
+            padding: 10px 0;
+        }
+        
+        .price-inputs {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .price-input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            min-width: 0;
+            transition: border 0.2s;
+        }
+        
+        .price-input:focus {
+            border-color: #2c80ff;
+            outline: none;
+        }
+        
+        .price-slider {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .price-slider-track {
+            height: 6px;
+            background: #2c80ff;
+            border-radius: 3px;
+            position: absolute;
+        }
+        
+        .price-slider-handle {
+            width: 22px;
+            height: 22px;
+            background: #fff;
+            border: 2px solid #2c80ff;
+            border-radius: 50%;
+            position: absolute;
+            top: -8px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        
+        .price-slider-handle:hover {
+            transform: scale(1.1);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .badge-out-of-stock {
+            background-color: #ffebee;
+            color: #d32f2f;
+        }
+        
+        .badge-gift {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .badge-sale {
+            background-color: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .badge-in-stock {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .product-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .product-badges {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 2;
+        }
+        
+        .product-image {
+            height: 200px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2c80ff;
+            overflow: hidden;
+            border: 1px solid #e8e8e8;
+        }
+        
+        .product-image i {
+            font-size: 60px;
+            opacity: 0.9;
+        }
+        
+        .product-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            min-height: 48px;
+            color: #222;
+            line-height: 1.4;
+        }
+        
+        .product-reviews {
+            color: #ff9800;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .current-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #000;
+        }
+        
+        .old-price {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .buy-button {
+            flex: 1;
+            background: linear-gradient(135deg, #2c80ff 0%, #1a6fe0 100%);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s;
+            min-width: 0;
+        }
+        
+        .buy-button:hover {
+            background: linear-gradient(135deg, #1a6fe0 0%, #0d5ec9 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 128, 255, 0.3);
+        }
+        
+        .favorite-button {
+            width: 48px;
+            min-width: 48px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        
+        .favorite-button:hover {
+            background-color: #e8e8e8;
+            border-color: #ccc;
+        }
+        
+        .favorite-button.active i {
+            color: #e74c3c;
+        }
+        
+        .sorting {
+            background-color: #fff;
+            padding: 18px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            flex-wrap: wrap;
+            gap: 15px;
+            border: 1px solid #eee;
+        }
+        
+        .sort-label {
+            font-weight: 600;
+            font-size: 15px;
+            white-space: nowrap;
+            color: #333;
+        }
+        
+        .sort-select {
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #fff;
+            cursor: pointer;
+            min-width: 220px;
+            font-size: 14px;
+            transition: border 0.2s;
+        }
+        
+        .sort-select:focus {
+            border-color: #2c80ff;
+            outline: none;
+        }
+        
+        .no-products {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+        }
+        
+        .no-products i {
+            color: #ddd;
+            font-size: 64px;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .no-products h3 {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        
+        .no-products p {
+            color: #888;
+            font-size: 16px;
+        }
+        
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: -500px;
+            width: 480px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 30px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .cart-modal.active {
+            right: 0;
+        }
+        
+        .cart-header {
+            padding: 25px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .cart-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s, transform 0.2s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-cart:hover {
+            color: #333;
+            background: #f5f5f5;
+            transform: rotate(90deg);
+        }
+        
+        .cart-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 25px;
+        }
+        
+        .cart-item {
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cart-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .cart-item-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #333;
+            flex: 1;
+            margin-right: 15px;
+            line-height: 1.4;
+        }
+        
+        .cart-item-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c80ff;
+            white-space: nowrap;
+        }
+        
+        .cart-item-gift {
+            font-size: 14px;
+            color: #2e7d32;
+            margin-top: 8px;
+            padding-left: 22px;
+            position: relative;
+        }
+        
+        .cart-item-gift:before {
+            content: "🎁";
+            position: absolute;
+            left: 0;
+            font-size: 16px;
+        }
+        
+        .cart-item-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .delete-item {
+            background: none;
+            border: none;
+            color: #d32f2f;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s, transform 0.2s;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        
+        .delete-item:hover {
+            color: #b71c1c;
+            background: #ffebee;
+            transform: translateX(-2px);
+        }
+        
+        .cart-footer {
+            padding: 25px;
+            border-top: 1px solid #eee;
+            background: #fff;
+            box-shadow: 0 -2px 15px rgba(0,0,0,0.05);
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .total-label {
+            font-size: 20px;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .total-price {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .cart-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .checkout-btn {
+            background: linear-gradient(135deg, #2c80ff 0%, #1a6fe0 100%);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            background: linear-gradient(135deg, #1a6fe0 0%, #0d5ec9 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(44, 128, 255, 0.4);
+        }
+        
+        .continue-shopping {
+            background: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .continue-shopping:hover {
+            background: #e9ecef;
+            border-color: #ccc;
+            transform: translateY(-1px);
+        }
+        
+        .also-buy-section {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 25px;
+        }
+        
+        .also-buy-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .also-buy-items {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        
+        .also-buy-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            transition: all 0.2s;
+        }
+        
+        .also-buy-item:hover {
+            background: #f0f7ff;
+            border-color: #c3d9ff;
+            transform: translateX(5px);
+        }
+        
+        .also-buy-image {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2c80ff;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+        
+        .also-buy-info {
+            flex: 1;
+        }
+        
+        .also-buy-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+        
+        .also-buy-reviews {
+            font-size: 13px;
+            color: #ff9800;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .also-buy-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c80ff;
+        }
+        
+        .add-to-cart-small {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .add-to-cart-small:hover {
+            background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+        
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .icon-btn {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .icon-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        @media (max-width: 1200px) {
+            .container {
+                gap: 25px;
+            }
+            
+            .filters-column {
+                flex: 0 0 260px;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .filters-column {
+                width: 100%;
+                position: static;
+                margin-bottom: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            main {
+                margin-top: 80px;
+                padding: 15px;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .product-card {
+                padding: 15px;
+            }
+            
+            .product-image {
+                height: 160px;
+            }
+            
+            .product-image i {
+                font-size: 50px;
+            }
+            
+            .cart-modal {
+                width: 90%;
+                right: -90%;
+            }
+            
+            .also-buy-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .add-to-cart-small {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sorting {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .sort-select {
+                width: 100%;
+                min-width: auto;
+            }
+            
+            .price-inputs {
+                flex-wrap: wrap;
+            }
+            
+            .price-input {
+                min-width: 120px;
+            }
+            
+            .category-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .cart-modal {
+                width: 100%;
+                right: -100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            main {
+                padding: 12px;
+            }
+            
+            .product-card {
+                padding: 15px;
+            }
+            
+            .filters-column {
+                padding: 15px;
+            }
+            
+            .product-actions {
+                flex-direction: row;
+            }
+            
+            .cart-header {
+                padding: 20px;
+            }
+            
+            .cart-content {
+                padding: 20px;
+            }
+            
+            .cart-footer {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-overlay" id="cartOverlay"></div>
+    
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h2 class="cart-title">Корзина</h2>
+            <button class="close-cart" id="closeCart">&times;</button>
+        </div>
+        
+        <div class="cart-content">
+            <div class="cart-item">
+                <div class="cart-item-header">
+                    <div class="cart-item-title">Дверной Замок Golden Soft для офиса</div>
+                    <div class="cart-item-price">33 000 ₽</div>
+                </div>
+                <div class="cart-item-gift">+ Подарок: "Приложение к замкам Golden Service"</div>
+                <div class="cart-item-actions">
+                    <button class="delete-item">
+                        <i class="fas fa-trash"></i>
+                        Удалить
+                    </button>
+                </div>
+            </div>
+            
+            <div class="also-buy-section">
+                <h3 class="also-buy-title">С этим покупают</h3>
+                <div class="also-buy-items">
+                    <div class="also-buy-item">
+                        <div class="also-buy-image">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="also-buy-info">
+                            <div class="also-buy-name">Дверной Замок Golden Soft для офиса</div>
+                            <div class="also-buy-reviews"><i class="fas fa-star"></i> (12) отзывов</div>
+                            <div class="also-buy-price">8 000 ₽</div>
+                        </div>
+                        <button class="add-to-cart-small">Добавить</button>
+                    </div>
+                    
+                    <div class="also-buy-item">
+                        <div class="also-buy-image">
+                            <i class="fas fa-door-closed"></i>
+                        </div>
+                        <div class="also-buy-info">
+                            <div class="also-buy-name">Дверной Замок Golden Soft для офиса</div>
+                            <div class="also-buy-reviews"><i class="fas fa-star"></i> (12) отзывов</div>
+                            <div class="also-buy-price">9 000 ₽</div>
+                        </div>
+                        <button class="add-to-cart-small">Добавить</button>
+                    </div>
+                    
+                    <div class="also-buy-item">
+                        <div class="also-buy-image">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <div class="also-buy-info">
+                            <div class="also-buy-name">Дверной Замок Golden Soft для офиса</div>
+                            <div class="also-buy-reviews"><i class="fas fa-star"></i> (12) отзывов</div>
+                        </div>
+                        <button class="add-to-cart-small">Добавить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cart-footer">
+            <div class="cart-total">
+                <div class="total-label">Итого:</div>
+                <div class="total-price">66 000 ₽</div>
+            </div>
+            <div class="cart-buttons">
+                <a href="buying.html"><button class="checkout-btn" id="checkoutBtn">Оформить заказ</button></a>
+                <button class="continue-shopping" id="continueShopping">Продолжить покупки</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-banner">
+        <div class="banner-content">
+            Скидка 10% по промокоду "ZAMOK" на все заказы до 10.09
+        </div>
+        <a href="#" class="banner-link">Обратный звонок</a>
+    </div>
+
+    <header>
+        <div class="header-container">
+            <img src="IMG/logo.png" width="40" alt="Логотип" class="logo">
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="DoorLocksShop.html">Главная</a></li>
+                    <li class="has-dropdown">
+                        <a href="categoty.html">Каталог</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Цилиндровые замки</a></li>
+                            <li><a href="#">Сувальдные замки</a></li>
+                            <li><a href="#">Электронные замки</a></li>
+                            <li><a href="#">Врезные замки</a></li>
+                            <li><a href="#">Накладные замки</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Оптовая продажа</a></li>
+                    <li><a href="#">О нас</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-contacts">
+                <div class="phone">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>+7 (966) 55 88 499</span>
+                </div>
+                
+                <div class="icon-buttons">
+                    <div class="icon-btn" title="Избранное">
+                        <i class="far fa-heart"></i>
+                    </div>
+                    <div class="icon-btn cart-icon-btn" title="Корзина" id="cartIconBtn">
+                        <i class="fas fa-shopping-basket"></i>
+                        <span class="cart-count" id="cartCount">1</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="burger" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <nav class="mobile-nav" id="mobileNav">
+            <ul>
+                <li><a href="#">Главная</a></li>
+                <li><a href="categoty.html">Каталог</a></li>
+                <li><a href="#">Оптовая продажа</a></li>
+                <li><a href="#">О нас</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="filters-column">
+                <div class="filter-section">
+                    <div class="filter-title">
+                        Фильтр по цене
+                        <i class="fas fa-filter"></i>
+                    </div>
+                </div>
+                
+                <div class="filter-section">
+                    <div class="price-filter">
+                        <div class="price-inputs">
+                            <input type="text" class="price-input" id="min-price" value="0 ₽">
+                            <span>-</span>
+                            <input type="text" class="price-input" id="max-price" value="100 000 ₽">
+                        </div>
+                        <div class="price-slider" id="price-slider">
+                            <div class="price-slider-track" id="price-track"></div>
+                            <div class="price-slider-handle" id="min-handle"></div>
+                            <div class="price-slider-handle" id="max-handle"></div>
+                        </div>
+                        <div style="font-size: 13px; color: #666; text-align: center; margin-top: 10px;">
+                            Перемещайте ползунки для фильтрации
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            
+            <div class="products-column">
+                <div class="breadcrumbs">
+                    <a href="DoorLocksShop.html">Главная</a> / <a href="categoty.html">Каталог</a> / <span>Накладные электронные замки</span>
+                </div>
+                
+                <div class="category-header">
+                    <div class="category-title">
+                        Накладные электронные замки <span class="product-count">(12 товаров)</span>
+                    </div>
+                </div>
+                
+                <div class="reset-filters">
+                    <i class="fas fa-times"></i>
+                    Сбросить фильтры
+                </div>
+                
+                <div class="sorting">
+                    <div class="sort-label">Сортировать по:</div>
+                    <select class="sort-select" id="sort-select">
+                        <option value="popular">Популярности</option>
+                        <option value="price-asc">Цене: по возрастанию</option>
+                        <option value="price-desc">Цене: по убыванию</option>
+                        <option value="new">Новизне</option>
+                        <option value="reviews">Отзывам</option>
+                    </select>
+                </div>
+                
+                <div class="products-grid" id="products-grid"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo-column">
+                <img src="IMG/logo.png" alt="Golden Soft Logo" class="footer-logo">
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-vk"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Навигация</h3>
+                <ul class="footer-list">
+                    <li><a href="DoorLocksShop.html">Главная</a></li>
+                    <li><a href="categoty.html">Каталог</a></li>
+                    <li><a href="#">Оптовая продажа</a></li>
+                    <li><a href="#">О нас</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Контакты</h3>
+                <ul class="footer-list">
+                    <li class="contact-item">
+                        <span class="contact-icon"><i class="fas fa-phone"></i></span>
+                        <span>+7 (988) 565 00 38</span>
+                    </li>
+                    <li class="contact-item">
+                        <span class="contact-icon"><i class="fas fa-phone"></i></span>
+                        <span>+375 33 662 82 56</span>
+                    </li>
+                    <li class="contact-item">
+                        <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                        <span>vladpertcev@mail.ru</span>
+                    </li>
+                    <li class="contact-item">
+                        <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                        <span>korobko416@gmail.com</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Адрес</h3>
+                <ul class="footer-list">
+                    <li class="contact-item">
+                        <span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+                        <span>Россия, Ростов-на-Дону<br>ул. Богачева, 16</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Информация</h3>
+                <ul class="footer-list">
+                    <li><a href="#">Доставка и оплата</a></li>
+                    <li><a href="#">Гарантии</a></li>
+                    <li><a href="#">Возврат товара</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            © 2024 Golden Soft. Все права защищены.
+        </div>
+    </footer>
+
+    <script src="JS/script.js">
+        window.products = [
+    { id: 1, title: "Вариативный замок Golden Soft для отеля", price: 7000, oldPrice: 8000, reviews: 12, badges: ["out-of-stock", "gift"], icon: "fa-lock" },
+    { id: 2, title: "Дверной Замок Golden Soft для офиса", price: 33000, oldPrice: 30000, reviews: 12, badges: ["sale"], icon: "fa-door-closed" },
+    { id: 3, title: "Дверной Замок Golden Soft для офиса", price: 9000, oldPrice: 12000, reviews: 12, badges: ["in-stock", "gift", "sale"], icon: "fa-key" },
+    { id: 4, title: "Дверной Замок Golden Soft для офиса", price: 9000, oldPrice: 12000, reviews: 12, badges: ["sale"], icon: "fa-lock" },
+    { id: 5, title: "Дверной Замок Golden Soft для офиса", price: 33000, oldPrice: 30000, reviews: 12, badges: ["in-stock", "gift", "sale"], icon: "fa-door-closed" },
+    { id: 6, title: "Электронный кодовый замок SmartLock Pro", price: 15500, oldPrice: 18000, reviews: 24, badges: ["sale"], icon: "fa-lock" },
+    { id: 7, title: "Биометрический замок FingerTech", price: 45000, oldPrice: 50000, reviews: 18, badges: ["in-stock"], icon: "fa-fingerprint" },
+    { id: 8, title: "Замок для офиса OfficeGuard", price: 22000, oldPrice: 25000, reviews: 8, badges: ["gift"], icon: "fa-lock" },
+    { id: 9, title: "Умный замок с Bluetooth", price: 12500, oldPrice: 15000, reviews: 15, badges: ["sale"], icon: "fa-bluetooth" },
+    { id: 10, title: "Премиум замок для дома", price: 68000, oldPrice: 75000, reviews: 32, badges: ["in-stock"], icon: "fa-home" },
+    { id: 11, title: "Замок для шкафчика с кодом", price: 3500, oldPrice: 4500, reviews: 6, badges: ["sale"], icon: "fa-archive" },
+    { id: 12, title: "Офисный замок с картой доступа", price: 18500, oldPrice: 21000, reviews: 21, badges: ["in-stock", "gift"], icon: "fa-id-card" }
+    
+];      
+    </script>
+    
+    <script>
+        const products = [
+            { id: 1, title: "Вариативный замок Golden Soft для отеля", price: 7000, oldPrice: 8000, reviews: 12, badges: ["out-of-stock", "gift"], icon: "fa-lock" },
+            { id: 2, title: "Дверной Замок Golden Soft для офиса", price: 33000, oldPrice: 30000, reviews: 12, badges: ["sale"], icon: "fa-door-closed" },
+            { id: 3, title: "Дверной Замок Golden Soft для офиса", price: 9000, oldPrice: 12000, reviews: 12, badges: ["in-stock", "gift", "sale"], icon: "fa-key" },
+            { id: 4, title: "Дверной Замок Golden Soft для офиса", price: 9000, oldPrice: 12000, reviews: 12, badges: ["sale"], icon: "fa-lock" },
+            { id: 5, title: "Дверной Замок Golden Soft для офиса", price: 33000, oldPrice: 30000, reviews: 12, badges: ["in-stock", "gift", "sale"], icon: "fa-door-closed" },
+            { id: 6, title: "Электронный кодовый замок SmartLock Pro", price: 15500, oldPrice: 18000, reviews: 24, badges: ["sale"], icon: "fa-lock" },
+            { id: 7, title: "Биометрический замок FingerTech", price: 45000, oldPrice: 50000, reviews: 18, badges: ["in-stock"], icon: "fa-fingerprint" },
+            { id: 8, title: "Замок для офиса OfficeGuard", price: 22000, oldPrice: 25000, reviews: 8, badges: ["gift"], icon: "fa-lock" },
+            { id: 9, title: "Умный замок с Bluetooth", price: 12500, oldPrice: 15000, reviews: 15, badges: ["sale"], icon: "fa-bluetooth" },
+            { id: 10, title: "Премиум замок для дома", price: 68000, oldPrice: 75000, reviews: 32, badges: ["in-stock"], icon: "fa-home" },
+            { id: 11, title: "Замок для шкафчика с кодом", price: 3500, oldPrice: 4500, reviews: 6, badges: ["sale"], icon: "fa-archive" },
+            { id: 12, title: "Офисный замок с картой доступа", price: 18500, oldPrice: 21000, reviews: 21, badges: ["in-stock", "gift"], icon: "fa-id-card" }
+        ];
+
+        let filteredProducts = [...products];
+        let currentSort = 'popular';
+        let minPrice = 0;
+        let maxPrice = 100000;
+        
+        const minPriceInput = document.getElementById('min-price');
+        const maxPriceInput = document.getElementById('max-price');
+        const minHandle = document.getElementById('min-handle');
+        const maxHandle = document.getElementById('max-handle');
+        const priceTrack = document.getElementById('price-track');
+        const priceSlider = document.getElementById('price-slider');
+        const productsGrid = document.getElementById('products-grid');
+        const productCountElement = document.querySelector('.product-count');
+        const sortSelect = document.getElementById('sort-select');
+        const cartIconBtn = document.getElementById('cartIconBtn');
+        const cartModal = document.getElementById('cartModal');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const closeCart = document.getElementById('closeCart');
+        const continueShopping = document.getElementById('continueShopping');
+        const cartCount = document.getElementById('cartCount');
+        
+        function formatPrice(price) {
+            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₽';
+        }
+        
+        function parsePrice(priceStr) {
+            const cleaned = priceStr.replace(/\s/g, '').replace('₽', '').replace('P', '');
+            return parseInt(cleaned) || 0;
+        }
+        
+        function createProductCard(product) {
+            const badgesHTML = product.badges.map(badge => {
+                const badgeTexts = { 'out-of-stock': 'Нет в наличии', 'gift': 'Подарок', 'sale': 'SALE', 'in-stock': 'В наличии' };
+                const badgeClasses = { 'out-of-stock': 'badge-out-of-stock', 'gift': 'badge-gift', 'sale': 'badge-sale', 'in-stock': 'badge-in-stock' };
+                return `<span class="badge ${badgeClasses[badge]}">${badgeTexts[badge]}</span>`;
+            }).join('');
+            
+            return `
+                <div class="product-card" data-id="${product.id}">
+                    <div class="product-badges">${badgesHTML}</div>
+                    <div class="product-image">
+                        <i class="fas ${product.icon}"></i>
+                    </div>
+                    <div class="product-title">${product.title}</div>
+                    <div class="product-reviews"><i class="fas fa-star"></i> [${product.reviews}] отзывов</div>
+                    <div class="product-price">
+                        <span class="current-price">${formatPrice(product.price)}</span>
+                        ${product.oldPrice ? `<span class="old-price">${formatPrice(product.oldPrice)}</span>` : ''}
+                    </div>
+                    <div class="product-actions">
+                        <button class="buy-button" onclick="addToCartFromCatalog(${product.id})">В корзину</button>
+                        <button class="favorite-button" onclick="toggleFavorite(${product.id})">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function renderProducts() {
+            filteredProducts = products.filter(product => product.price >= minPrice && product.price <= maxPrice);
+            
+            const sortedProducts = [...filteredProducts];
+            switch(currentSort) {
+                case 'price-asc': sortedProducts.sort((a, b) => a.price - b.price); break;
+                case 'price-desc': sortedProducts.sort((a, b) => b.price - a.price); break;
+                case 'popular': sortedProducts.sort((a, b) => b.reviews - a.reviews); break;
+                case 'new': sortedProducts.sort((a, b) => b.id - a.id); break;
+                case 'reviews': sortedProducts.sort((a, b) => b.reviews - a.reviews); break;
+            }
+            
+            productsGrid.innerHTML = sortedProducts.map(createProductCard).join('');
+            productCountElement.textContent = `(${filteredProducts.length} товаров)`;
+            
+            if (filteredProducts.length === 0) {
+                productsGrid.innerHTML = `
+                    <div class="no-products">
+                        <i class="fas fa-search"></i>
+                        <h3>Товары не найдены</h3>
+                        <p>Попробуйте изменить диапазон цен</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function updateSlider() {
+            const minPercent = (minPrice / 100000) * 100;
+            const maxPercent = (maxPrice / 100000) * 100;
+            
+            minHandle.style.left = `calc(${minPercent}% - 11px)`;
+            maxHandle.style.left = `calc(${maxPercent}% - 11px)`;
+            priceTrack.style.left = `${minPercent}%`;
+            priceTrack.style.width = `${maxPercent - minPercent}%`;
+            
+            minPriceInput.value = formatPrice(minPrice);
+            maxPriceInput.value = formatPrice(maxPrice);
+            renderProducts();
+        }
+        
+        let isDragging = false;
+        let activeHandle = null;
+        
+        function startDrag(e, handle) {
+            isDragging = true;
+            activeHandle = handle;
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
+            e.preventDefault();
+        }
+        
+        function drag(e) {
+            if (!isDragging || !activeHandle) return;
+            const sliderRect = priceSlider.getBoundingClientRect();
+            let newX = e.clientX - sliderRect.left;
+            newX = Math.max(0, Math.min(newX, sliderRect.width));
+            const percent = (newX / sliderRect.width) * 100;
+            const newValue = (percent / 100) * 100000;
+            
+            if (activeHandle === minHandle) {
+                minPrice = Math.min(newValue, maxPrice - 1000);
+                minPrice = Math.max(minPrice, 0);
+            } else {
+                maxPrice = Math.max(newValue, minPrice + 1000);
+                maxPrice = Math.min(maxPrice, 100000);
+            }
+            updateSlider();
+        }
+        
+        function stopDrag() {
+            isDragging = false;
+            activeHandle = null;
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', stopDrag);
+        }
+        
+        minHandle.addEventListener('mousedown', (e) => startDrag(e, minHandle));
+        maxHandle.addEventListener('mousedown', (e) => startDrag(e, maxHandle));
+        
+        minPriceInput.addEventListener('change', function() {
+            minPrice = parsePrice(this.value);
+            if (minPrice > maxPrice) minPrice = maxPrice - 1000;
+            minPrice = Math.max(0, minPrice);
+            updateSlider();
+        });
+        
+        maxPriceInput.addEventListener('change', function() {
+            maxPrice = parsePrice(this.value);
+            if (maxPrice < minPrice) maxPrice = minPrice + 1000;
+            maxPrice = Math.min(100000, maxPrice);
+            updateSlider();
+        });
+        
+        sortSelect.addEventListener('change', function() {
+            currentSort = this.value;
+            renderProducts();
+        });
+        
+        document.querySelector('.reset-filters').addEventListener('click', function() {
+            minPrice = 0;
+            maxPrice = 100000;
+            sortSelect.value = 'popular';
+            currentSort = 'popular';
+            updateSlider();
+        });
+        
+        function openCart() {
+            cartModal.classList.add('active');
+            cartOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeCartModal() {
+            cartModal.classList.remove('active');
+            cartOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function updateCartCount(change) {
+            let currentCount = parseInt(cartCount.textContent) || 0;
+            currentCount += change;
+            if (currentCount < 0) currentCount = 0;
+            cartCount.textContent = currentCount;
+            cartCount.style.display = currentCount > 0 ? 'flex' : 'none';
+        }
+        
+        function addToCartFromCatalog(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            alert(`Товар "${product.title}" добавлен в корзину!`);
+            updateCartCount(1);
+        }
+        
+        function toggleFavorite(productId) {
+            const button = document.querySelector(`.product-card[data-id="${productId}"] .favorite-button`);
+            const icon = button.querySelector('i');
+            if (icon.classList.contains('far')) {
+                icon.classList.replace('far', 'fas');
+                button.classList.add('active');
+                alert('Товар добавлен в избранное!');
+            } else {
+                icon.classList.replace('fas', 'far');
+                button.classList.remove('active');
+                alert('Товар удален из избранного!');
+            }
+        }
+        
+        function setupAlsoBuyButtons() {
+            document.querySelectorAll('.add-to-cart-small').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productName = this.closest('.also-buy-item').querySelector('.also-buy-name').textContent;
+                    alert(`Товар "${productName}" добавлен в корзину!`);
+                    updateCartCount(1);
+                });
+            });
+        }
+        
+        function setupDeleteButtons() {
+            document.querySelectorAll('.delete-item').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (confirm('Удалить товар из корзины?')) {
+                        this.closest('.cart-item').remove();
+                        updateCartCount(-1);
+                    }
+                });
+            });
+        }
+                
+        
+        const burger = document.getElementById('burger');
+        const mobileNav = document.getElementById('mobileNav');
+        if (burger && mobileNav) {
+            burger.addEventListener('click', function() {
+                this.classList.toggle('active');
+                mobileNav.classList.toggle('active');
+            });
+        }
+        
+        cartIconBtn.addEventListener('click', openCart);
+        closeCart.addEventListener('click', closeCartModal);
+        cartOverlay.addEventListener('click', closeCartModal);
+        continueShopping.addEventListener('click', closeCartModal);
+        
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && cartModal.classList.contains('active')) {
+                closeCartModal();
+            }
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSlider();
+            setTimeout(() => updateSlider(), 100);
+            setupDeleteButtons();
+            setupAlsoBuyButtons();
+            updateCartCount(0);
+        });
+        
+        window.addEventListener('resize', updateSlider);
+    </script>
+</body>
+</html>

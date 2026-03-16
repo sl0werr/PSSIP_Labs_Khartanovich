@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Модульная сетка CSS Grid с товаром</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="js.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 15px;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .grid-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: 100px;
+        }
+        
+        .item-1 { grid-column: 1 / -1; }
+        .item-2 { grid-column: span 2; }
+        .item-3 { grid-column: span 2; }
+        .item-4 { grid-column: span 2; }
+        .item-5 { grid-column: span 3; }
+        .item-6 { grid-column: span 3; }
+        .item-7 { grid-column: 1 / -1; }
+        .item-8 { grid-column: span 3; }
+        .item-9 { grid-column: span 3; }
+        .item-10 { grid-column: 1 / -1; }
+
+        /* Стили для карточки товара */
+        .product-card {
+            font-family: Arial, sans-serif;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: white;
+            height: auto;
+            display: block;
+            text-align: center;
+            position: relative;
+        }
+        
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .product-image {
+            margin-top:70px;
+            height: 100%;
+            background-color: #ffffff;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .credit-overlay {
+            position: absolute;
+            top: 10px;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .credit-badge {
+            background-color: rgba(255, 255, 255, 0);
+            color: rgb(221, 0, 255);
+            padding: 5px 15px;
+            font-size: 12px;
+            border-radius: 0 4px 4px 0;
+            max-width: 80%;
+        }
+        
+        .wishlist-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #ff0000;
+            z-index: 2;
+        }
+        
+        .cart-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #2196F3;
+            z-index: 2;
+        }
+        
+        .product-title {
+            font-size: 12px;
+            margin-bottom: 10px;
+            color: #757575;
+        }
+        
+        .product-subtitle {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .price-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .super-price {
+            font-size: 16px;
+            color: #000000;
+            margin-bottom: 5px;
+        }
+        
+        .price-values {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .current-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e53935;
+        }
+        
+        .old-price {
+            font-weight: bold;
+            font-size: 20px;
+            color: #c2c1c1;
+            text-decoration: line-through;
+        }
+        
+        .bonus-info {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .note {
+            font-size: 12px;
+            color: #757575;
+            font-style: italic;
+        }
+
+        /* Стили для блока "Образование и работа" */
+        .education-work-section {
+
+            grid-column: 1 / -1;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-bottom: 5px solid #980808;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .info-block {
+            margin-bottom: 25px;
+        }
+
+        .info-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+            .info-title:before {
+                content: "•";
+                color: #3498db;
+                font-size: 20px;
+                margin-right: 10px;
+            }
+
+        .info-content {
+            margin-left: 25px;
+            color: #555;
+        }
+
+        .divider {
+            border-top: 1px dashed #ddd;
+            margin: 20px 0;
+        }
+
+        .place-of-study {
+            margin-top: 25px;
+        }
+
+        .add-more {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .hexagon-btn {
+            position: relative;
+            width: 150px; /* Ширина увеличена для текста */
+            height: 50px; /* Высота */
+            background-color: #FFA500; /* Оранжевый цвет */
+            margin: 25px auto;
+            color: black;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            text-transform: uppercase;
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+        }
+
+        /* Альтернативный вариант с псевдоэлементами (для лучшей совместимости) */
+        .hexagon-btn-alt {
+            position: relative;
+            width: 180px;
+            height: 50px;
+            background-color: #FFA500;
+            margin: 25px auto;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+            .hexagon-btn-alt:before,
+            .hexagon-btn-alt:after {
+                content: "";
+                position: absolute;
+                width: 25%;
+                height: 100%;
+                background-color: inherit;
+            }
+
+            .hexagon-btn-alt:before {
+                left: -12.5%;
+                transform: skewX(-30deg);
+            }
+
+            .hexagon-btn-alt:after {
+                right: -12.5%;
+                transform: skewX(30deg);
+            }
+
+            .hexagon-btn-alt span {
+                position: relative;
+                z-index: 1;
+                font-weight: bold;
+                font-size: 14px;
+                text-transform: uppercase;
+            }
+
+        .hexagon-btn:hover {
+            background-color: #FF8C00;
+        }
+
+        /* Убираем перенос текста */
+        .hexagon-btn span {
+            white-space: nowrap;
+        }
+
+        .select-wrapper {
+            position: relative;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+            .select-wrapper:after {
+                content: "▼";
+                font-size: 12px;
+                color: #777;
+                position: absolute;
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                pointer-events: none;
+            }
+
+        .custom-select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 3px solid #bba44e;
+            border-radius: 4px;
+            appearance: none;
+            background-color: #ffffc1;
+            cursor: pointer;
+        }
+
+            .custom-select:focus {
+                outline: none;
+                border-color: #3498db;
+                box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+            }
+
+        .input-field {
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border: 3px solid #bba44e;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #ffffc1;
+        }
+
+            .input-field:focus {
+                outline: none;
+                border-color: #3498db;
+                box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+            }
+
+        .sub-info {
+            margin-left: 15px;
+            color: #777;
+            font-size: 14px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+        }
+
+            .row .select-wrapper {
+                flex: 1;
+            }
+
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(1, 1fr);
+            }
+            .item-1,
+            .item-2, .item-3, .item-4,
+            .item-5, .item-6, .item-7,
+            .item-8, .item-9, .education-work-section {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-item item-1">1</div>
+        <div class="grid-item item-2">2</div>
+        <div class="grid-item item-3">3</div>
+        <div class="grid-item item-4">4</div>
+
+        <!-- Вместо блока 5 вставляем карточку товара -->
+        <div class="item-5" style="display: block; height: auto;">
+            <div class="product-card">
+                <button class="wishlist-btn"><i class="fas fa-heart"></i></button>
+                <button class="cart-btn"><i class="fas fa-shopping-cart"></i></button>
+
+                <div class="product-image-container">
+                    <div class="product-image"><img src="1.png"></div>
+                    <div class="credit-overlay">
+                        <span class="credit-badge" style="margin-top: 30px;"><b>КРЕДИТ ДО<br> 36 МЕСЯЦЕВ</b></span>
+                        <span class="credit-badge" style="color: #388e3c;"><b>РАССРОЧКА <br>ДО 6 МЕСЯЦЕВ</b></span>
+                    </div>
+                </div>
+
+                <div class="product-title">Потолочные светильники</div>
+                <div class="product-subtitle">Светодиодная RGB лента Tapo L920-5</div>
+
+                <div class="price-container">
+                    <div class="super-price">
+                        Супер цена:
+                        <span class="current-price">199<sup>.00</sup></span>
+                        <span class="old-price">242<sup>.68</sup></span>
+                    </div>
+                </div>
+
+                <div class="bonus-info"><img src="2.png" style="width: 7%;"> Вернём до </span>7<sup>28</sup> на бонусную карту</div>
+                <div class="note">*тип рассрочки при которой скидка не действует</div>
+            </div>
+        </div>
+
+        <div class="grid-item item-6">6</div>
+        <div class="grid-item item-7">7</div>
+        <div class="grid-item item-8">8</div>
+        <div class="grid-item item-9">9</div>
+
+        <div class="education-work-section">
+            <h1 class="section-title">ОБРАЗОВАНИЕ И РАБОТА</h1>
+
+            <div class="info-block">
+                <div class="sub-info"><span style="color:red;">* </span>Информация об образовании</div>
+                <div class="info-content">
+                    <div class="select-wrapper">
+                        <select class="custom-select">
+                            <option value="" disabled selected>Учащийся общеобразовательного учреждения</option>
+                            <option value="school">Учащийся общеобразовательного учреждения</option>
+                            <option value="college">Студент колледжа</option>
+                            <option value="university">Студент университета</option>
+                            <option value="graduate">Выпускник</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-block">
+                <div class="sub-info"><span style="color:red;">* </span>Информация о трудоустройстве</div>
+                <div class="info-content">
+                    <div class="select-wrapper">
+                        <select class="custom-select">
+                            <option value="" disabled selected>Учащийся</option>
+                            <option value="student">Учащийся</option>
+                            <option value="employed">Работаю</option>
+                            <option value="unemployed">Не работаю</option>
+                            <option value="freelance">Фрилансер</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="place-of-study">
+                <h2 class="section-title">МЕСТО УЧЕБЫ</h2>
+
+                <div class="info-block">
+                    <div class="sub-info"><span style="color:red;">* </span>Наименование учебного заведения</div>
+                    <div class="info-content">
+                        <input type="text" class="input-field">
+                        <div class="sub-info"><span style="color:red;">* </span>Регион</div>
+                        <div class="select-wrapper">
+                            <select class="custom-select">
+                                <option value="" disabled selected>Укажите регион</option>
+                                <option value="hrodno">Гродно</option>
+                                <option value="vitebsk">Витебск</option>
+                                <option value="minsk">Минск</option>
+                                <option value="minskObl">Минская область</option>
+                                <option value="brest">Брест</option>
+                                <option value="mogilev">Могилев</option>
+                                <option value="homel">Гомель</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-block">
+                    <div class="sub-info"><span style="color:red;">* </span>Населенный пункт</div>
+                    <div class="info-content">
+                        <input type="text" class="input-field" placeholder="Введите населенный пункт">
+                        <div class="sub-info"><span style="color:red;">* </span>Дата поступления</div>
+                        <div class="row">
+                            <div class="select-wrapper">
+                                <select class="custom-select">
+                                    <option value="" disabled selected>Укажите месяц</option>
+                                    <option value="january">Январь</option>
+                                    <option value="february">Февраль</option>
+                                    <option value="march">Март</option>
+                                    <option value="april">Апрель</option>
+                                    <option value="may">Май</option>
+                                    <option value="june">Июнь</option>
+                                    <option value="july">Июль</option>
+                                    <option value="august">Август</option>
+                                    <option value="september">Сентябрь</option>
+                                    <option value="october">Октябрь</option>
+                                    <option value="november">Ноябрь</option>
+                                    <option value="december">Декабрь</option>
+                                </select>
+                            </div>
+                            <div class="select-wrapper">
+                                <select class="custom-select">
+                                    <option value="" disabled selected>Укажите год</option>
+                                    <option value="2000">2000</option>
+                                    <option value="2001">2001</option>
+                                    <option value="2002">2002</option>
+                                    <option value="2003">2003</option>
+                                    <option value="2004">2004</option>
+                                    <option value="2005">2005</option>
+                                    <option value="2006">2006</option>
+                                    <option value="2007">2007</option>
+                                    <option value="2008">2008</option>
+                                    <option value="2009">2009</option>
+                                    <option value="2010">2010</option>
+                                    <option value="2011">2011</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-more">
+                <div class="hexagon-btn">ДОБАВИТЬ ЕЩЁ</div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

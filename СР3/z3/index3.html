@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ВАРИАНТ №19 (FLEX верстка)</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .template {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            min-height: 100vh;
+            border: 2px solid #333;
+            box-sizing: border-box;
+        }
+        
+        .header {
+            height: 100px;
+            background-color: #99FFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            border: 1px solid #000;
+        }
+        
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+        
+        .left-column {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .right-column {
+            width: 70%;
+        }
+        
+        .block {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+        
+        .block-1 {
+            height: 293px;
+            background-color: #FF9999;
+        }
+        
+        .block-2 {
+            height: 293px;
+            background-color: #99FF99;
+        }
+        
+        .block-3 {
+            height: 293px;
+            background-color: #9999FF;
+        }
+        
+        .block-3 img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .block-4 {
+            height: 100%;
+            min-height: 880px;
+            background-color: #FFFF99;
+        }
+        
+        .footer {
+            height: 100px;
+            background-color: #FF99FF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            border: 1px solid #000;
+        }
+        
+        @media (max-width: 480px) {
+            .header{
+                display: none;
+            }
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .left-column, .right-column {
+                width: 100%;
+            }
+            
+            .block-4 {
+                display: none;
+            }
+            
+            .block-1, .block-2, .block-3 {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="template">
+        <div class="header">шапка</div>
+        
+        <div class="main-content">
+            <div class="left-column">
+                <div class="block block-1">1</div>
+                <div class="block block-2">2</div>
+                <div class="block block-3"><img src="Лого.png" alt="Логотип"></div>
+            </div>
+            
+            <div class="right-column">
+                <div class="block block-4">4</div>
+            </div>
+        </div>
+        
+        <div class="footer">подвал</div>
+    </div>
+</body>
+</html>

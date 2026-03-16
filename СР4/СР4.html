@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма регистрации</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .main-container {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .avatar-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 200px;
+        }
+        .avatar-container {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 150px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .avatar-icon {
+            font-size: 48px;
+            color: white;
+        }
+        .registration-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .arrow-container {
+            margin-top: 10px;
+        }
+        .arrow {
+            font-size: 32px;
+            color: #4CAF50;
+        }
+        .form-container {
+            flex: 1;
+            min-width: 400px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+        }
+        .radio-group {
+            display: flex;
+            gap: 15px;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            transition: all 0.3s;
+        }
+
+        .radio-option input[type="radio"] {
+            width: auto;
+        }
+        button {
+            background: green;
+            color: white;
+            padding: 8px 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .output {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 6px;
+            display: none;
+            border-left: 4px solid #4CAF50;
+        }
+        .output h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .avatar-section {
+                width: 100%;
+            }
+            .form-container {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Блок с аватаркой слева -->
+        <div class="avatar-section">
+            <div class="avatar-container">
+                <div class="avatar-icon">👤</div>
+            </div>
+            <div class="registration-title">Регистрация</div>
+            <div class="arrow-container">
+                <div class="arrow">➡️</div>
+            </div>
+        </div>
+
+        <!-- Форма регистрации -->
+        <div class="form-container">
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="name">Имя</label>
+                    <input type="text" id="name" name="name" required placeholder="Введите ваше имя">
+                    <div class="error" id="nameError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Пол</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="sex1" name="sex" value="Женский" required>
+                            <label for="sex1">Женский</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="sex2" name="sex" value="Мужской" required>
+                            <label for="sex2">Мужской</label>
+                        </div>
+                    </div>
+                    <div class="error" id="sexError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" required placeholder="example@mail.com">
+                    <div class="error" id="emailError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="country">Страна</label>
+                    <select id="country" name="country" required>
+                        <option value="" disabled selected>Выберите страну проживания</option>
+                        <option value="Россия">Россия</option>
+                        <option value="Беларусь">Беларусь</option>
+                        <option value="Казахстан">Казахстан</option>
+                        <option value="Украина">Украина</option>
+                        <option value="Другая">Другая</option>
+                    </select>
+                    <div class="error" id="countryError"></div>
+                </div>
+                
+                <button type="submit">Отправить</button>
+            </form>
+            
+            <div class="output" id="output">
+                <h2>Данные формы:</h2>
+                <div id="formData"></div>
+                <h2>Данные из Cookie:</h2>
+                <div id="cookieData"></div>
+                <button id="clearCookie">Очистить Cookie</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registrationForm');
+            const output = document.getElementById('output');
+            const formDataDiv = document.getElementById('formData');
+            const cookieDataDiv = document.getElementById('cookieData');
+            const clearCookieBtn = document.getElementById('clearCookie');
+            
+            // Валидация формы
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                // Сброс ошибок
+                clearErrors();
+                
+                // Получение значений полей
+                const name = document.getElementById('name').value.trim();
+                const sex = document.querySelector('input[name="sex"]:checked');
+                const email = document.getElementById('email').value.trim();
+                const country = document.getElementById('country').value;
+                
+                let isValid = true;
+                
+                // Проверка на пустые поля
+                if (!name) {
+                    showError('nameError', 'Поле "Имя" обязательно для заполнения');
+                    isValid = false;
+                }
+                
+                if (!sex) {
+                    showError('sexError', 'Выберите пол');
+                    isValid = false;
+                }
+                
+                if (!email) {
+                    showError('emailError', 'Поле "E-mail" обязательно для заполнения');
+                    isValid = false;
+                }
+                
+                if (!country) {
+                    showError('countryError', 'Выберите страну проживания');
+                    isValid = false;
+                }
+                
+                // Проверка формата email с помощью регулярного выражения
+                if (email && !validateEmail(email)) {
+                    showError('emailError', 'Введите корректный email адрес');
+                    isValid = false;
+                }
+                
+                // Если форма валидна, обрабатываем данные
+                if (isValid) {
+                    processFormData(name, sex.value, email, country);
+                }
+            });
+            
+            // Функция проверки email с помощью регулярного выражения
+            function validateEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+            
+            // Функция отображения ошибок
+            function showError(elementId, message) {
+                document.getElementById(elementId).textContent = message;
+            }
+            
+            // Функция очистки ошибок
+            function clearErrors() {
+                const errorElements = document.querySelectorAll('.error');
+                errorElements.forEach(element => {
+                    element.textContent = '';
+                });
+            }
+            
+            // Функция для установки cookie
+            function setCookie(name, value, days) {
+                let expires = "";
+                if (days) {
+                    const date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + (value || "") + expires + "; path=/";
+            }
+            
+            // Функция для получения cookie
+            function getCookie(name) {
+                const nameEQ = name + "=";
+                const ca = document.cookie.split(';');
+                for(let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }
+            
+            // Функция для удаления cookie
+            function eraseCookie(name) {
+                document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            }
+            
+            // Обработка данных формы
+            function processFormData(name, sex, email, country) {
+                // 1. Вывод данных на страницу
+                formDataDiv.innerHTML = `
+                    <p><strong>Имя:</strong> ${name}</p>
+                    <p><strong>Пол:</strong> ${sex}</p>
+                    <p><strong>E-mail:</strong> ${email}</p>
+                    <p><strong>Страна:</strong> ${country}</p>
+                `;
+                
+                // 2. Сохранение в JSON
+                const formData = {
+                    name: name,
+                    sex: sex,
+                    email: email,
+                    country: country,
+                    timestamp: new Date().toISOString()
+                };
+                const jsonData = JSON.stringify(formData);
+                
+                // 3. Сохранение в cookie с использованием нашей функции
+                setCookie('formData', jsonData, 1); // cookie на 1 день
+                
+                // 4. Чтение из cookie и вывод на экран
+                displayCookieData();
+                
+                // 5. Показать блок с результатами
+                output.style.display = 'block';
+            }
+            
+            // Отображение данных из cookie
+            function displayCookieData() {
+                const cookieValue = getCookie('formData');
+                
+                if (cookieValue) {
+                    try {
+                        const data = JSON.parse(cookieValue);
+                        cookieDataDiv.innerHTML = `
+                            <p><strong>Имя:</strong> ${data.name}</p>
+                            <p><strong>Пол:</strong> ${data.sex}</p>
+                            <p><strong>E-mail:</strong> ${data.email}</p>
+                            <p><strong>Страна:</strong> ${data.country}</p>
+                            <p><strong>Время сохранения:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
+                        `;
+                    } catch (e) {
+                        cookieDataDiv.innerHTML = '<p>Ошибка при чтении cookie данных</p>';
+                        console.error('Ошибка парсинга cookie:', e);
+                    }
+                } else {
+                    cookieDataDiv.innerHTML = '<p>Нет данных в cookie</p>';
+                }
+            }
+            
+            // Очистка cookie
+            clearCookieBtn.addEventListener('click', function() {
+                eraseCookie('formData');
+                cookieDataDiv.innerHTML = '<p>Cookie очищены</p>';
+                // Обновляем отображение cookie данных
+                setTimeout(displayCookieData, 100);
+            });
+            
+            // При загрузке страницы проверяем, есть ли данные в cookie
+            displayCookieData();
+        });
+    </script>
+</body>
+</html>

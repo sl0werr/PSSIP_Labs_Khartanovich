@@ -1,0 +1,10 @@
+.birth-date{
+    background-color: red;
+    width: 100px;
+    height: 100px;
+    text-align: left;
+    padding: 10px;
+    color: white;
+    border: 1px solid darkred;
+    margin: 10px 0;
+}

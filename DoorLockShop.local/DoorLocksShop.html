@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoorLockShop — Магазин электронных замков</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/theme.css">
+    <link rel="stylesheet" href="CSS/auth.css">
+</head>
+<body>
+
+<div class="top-banner">
+    <span>Скидка 10% по промокоду <b>ZAMOK</b> на все заказы</span>
+    <a href="#callback">Обратный звонок</a>
+</div>
+
+<header class="site-header">
+    <div class="container header-inner">
+        <a href="DoorLocksShop.html" class="header-logo"><img src="IMG/logo.png" alt="Logo"><span>GoldenService</span></a>
+        <nav class="header-nav">
+            <a href="DoorLocksShop.html" class="active">Главная</a>
+            <div class="dropdown">
+                <a href="categoty.html">Каталог <i class="fas fa-chevron-down" style="font-size:10px;margin-left:4px"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="cat1.html?cat=2">Накладные замки</a></li>
+                    <li><a href="cat1.html?cat=3">Врезные замки</a></li>
+                    <li><a href="cat1.html?cat=5">Для квартиры</a></li>
+                    <li><a href="cat1.html?cat=6">Для дома</a></li>
+                    <li><a href="cat1.html?cat=7">Для отелей</a></li>
+                </ul>
+            </div>
+            <a href="wholesale.html">Оптовая продажа</a>
+            <a href="about.html">О нас</a>
+        </nav>
+        <div class="header-right">
+            <div class="header-phone"><i class="fas fa-phone-alt"></i> +375 (29) 558-84-99</div>
+            <div class="header-icons">
+                <a href="wishlist.html" class="icon-btn-h" title="Избранное"><i class="far fa-heart"></i><span class="badge-count wishlist-badge-count" style="display:none">0</span></a>
+                <button class="icon-btn-h cart-open-btn" title="Корзина"><i class="fas fa-shopping-bag"></i><span class="badge-count cart-badge-count" style="display:none">0</span></button>
+                <div id="authContainer"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-sidebar-head"><h2><i class="fas fa-shopping-bag"></i> Корзина</h2><button class="cart-close-btn">&times;</button></div>
+    <div class="cart-sidebar-body" id="cartSidebarBody"></div>
+    <div class="cart-sidebar-foot" id="cartSidebarFoot"><div class="cart-total-row"><span class="cart-total-label">Итого:</span><span class="cart-total-value">0 BYN</span></div><div class="cart-foot-btns"><a href="buying.html" class="btn btn-primary btn-block">Оформить заказ</a><button class="btn btn-outline btn-block cart-close-btn">Продолжить покупки</button></div></div>
+</div>
+
+<!-- HERO -->
+<section style="padding-top:32px">
+    <div class="container">
+        <div id="heroSlider" style="display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:24px;padding:16px 0;scrollbar-width:none">
+            <div style="flex:0 0 100%;scroll-snap-align:start;display:flex;background:var(--white);border-radius:var(--radius-xl);box-shadow:var(--shadow);overflow:hidden;min-height:400px">
+                <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:32px;background:#f8f9fb"><img src="IMG/lock1.png" alt="" style="max-height:340px;object-fit:contain"></div>
+                <div style="flex:1;padding:48px 40px;display:flex;flex-direction:column;justify-content:center">
+                    <div style="font-size:14px;color:var(--primary);font-weight:700;margin-bottom:8px">GOLDEN SOFT</div>
+                    <h2 style="font-size:32px;font-weight:800;color:var(--dark);margin-bottom:12px">GS-200Z-5 для офиса</h2>
+                    <p style="color:var(--text-2);margin-bottom:24px;line-height:1.7">Замок дверной электронный с роскошным глянцевым блеском. Подходит для деревянных и межкомнатных дверей.</p>
+                    <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:24px">
+                        <span style="font-size:28px;font-weight:800;color:var(--dark)">990 BYN</span>
+                        <span style="font-size:18px;color:var(--text-3);text-decoration:line-through">1 110 BYN</span>
+                    </div>
+                    <button class="btn btn-primary btn-lg" data-add-cart data-id="1" data-name="Golden Soft GS-200Z-5" data-brand="Golden Soft" data-price="990" data-image="IMG/lock1.png">
+                        <i class="fas fa-shopping-bag"></i> В корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATS -->
+<section style="margin-top:48px">
+    <div style="background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:var(--radius-xl);margin:0 24px;padding:40px;display:flex;justify-content:space-around;flex-wrap:wrap;gap:24px">
+        <div style="text-align:center;color:#fff"><div style="font-size:32px;font-weight:800">5 567</div><div style="font-size:14px;opacity:0.8;margin-top:4px">Клиентов</div></div>
+        <div style="text-align:center;color:#fff"><div style="font-size:32px;font-weight:800">1 245</div><div style="font-size:14px;opacity:0.8;margin-top:4px">Товаров</div></div>
+        <div style="text-align:center;color:#fff"><div style="font-size:32px;font-weight:800">372</div><div style="font-size:14px;opacity:0.8;margin-top:4px">Продаж в день</div></div>
+        <div style="text-align:center;color:#fff"><div style="font-size:32px;font-weight:800">20</div><div style="font-size:14px;opacity:0.8;margin-top:4px">Лет на рынке</div></div>
+    </div>
+</section>
+
+<!-- ADVANTAGES -->
+<section style="padding:64px 0">
+    <div class="container">
+        <h2 class="section-title">Почему GoldenService?</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px">
+            <div class="card" style="padding:32px;text-align:center"><img src="IMG/Возврат.png" width="80" style="margin-bottom:16px"><p style="font-size:15px;color:var(--text-2)">Возврат удвоенной стоимости каждого замка в случае брака</p></div>
+            <div class="card" style="padding:32px;text-align:center"><img src="IMG/Лайк.png" width="80" style="margin-bottom:16px"><p style="font-size:15px;color:var(--text-2)">Наносим ваш логотип компании на наш продукт</p></div>
+            <div class="card" style="padding:32px;text-align:center"><img src="IMG/Возврат.png" width="80" style="margin-bottom:16px"><p style="font-size:15px;color:var(--text-2)">Бесплатная доставка по всей Беларуси от 500 BYN</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- CATEGORIES -->
+<section style="padding:0 0 64px">
+    <div class="container">
+        <h2 class="section-title">Категории</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px">
+            <a href="cat1.html?cat=7" class="card" style="display:flex;align-items:center;gap:16px;padding:20px;text-decoration:none;color:var(--text)"><img src="IMG/ДляОтелей.png" width="70" style="border-radius:12px"><div><div style="font-size:16px;font-weight:700;margin-bottom:4px">Для отелей</div><div style="font-size:13px;color:var(--text-3)">Гостиничные замки</div></div></a>
+            <a href="cat1.html?cat=9" class="card" style="display:flex;align-items:center;gap:16px;padding:20px;text-decoration:none;color:var(--text)"><img src="IMG/ДляШкафчиков.png" width="70" style="border-radius:12px"><div><div style="font-size:16px;font-weight:700;margin-bottom:4px">Для шкафчиков</div><div style="font-size:13px;color:var(--text-3)">Замки для локеров</div></div></a>
+            <a href="cat1.html?cat=8" class="card" style="display:flex;align-items:center;gap:16px;padding:20px;text-decoration:none;color:var(--text)"><img src="IMG/ДляОфисов.png" width="70" style="border-radius:12px"><div><div style="font-size:16px;font-weight:700;margin-bottom:4px">Для офисов</div><div style="font-size:13px;color:var(--text-3)">Офисные решения</div></div></a>
+            <a href="cat1.html?cat=6" class="card" style="display:flex;align-items:center;gap:16px;padding:20px;text-decoration:none;color:var(--text)"><img src="IMG/ДляДома.png" width="70" style="border-radius:12px"><div><div style="font-size:16px;font-weight:700;margin-bottom:4px">Для дома</div><div style="font-size:13px;color:var(--text-3)">Входные двери</div></div></a>
+        </div>
+        <div style="text-align:center;margin-top:24px"><a href="categoty.html" class="btn btn-outline">Все категории</a></div>
+    </div>
+</section>
+
+<!-- POPULAR PRODUCTS -->
+<section style="padding:0 0 64px">
+    <div class="container">
+        <h2 class="section-title">Популярные товары</h2>
+        <div class="products-grid" id="popularProducts">
+            <div style="text-align:center;padding:40px;color:var(--text-3);grid-column:1/-1"><i class="fas fa-spinner fa-spin" style="font-size:24px"></i> Загрузка...</div>
+        </div>
+    </div>
+</section>
+
+<!-- CALLBACK -->
+<section id="callback" style="padding:0 0 64px">
+    <div class="container">
+        <div style="background:linear-gradient(135deg,var(--dark),var(--dark-2));border-radius:var(--radius-xl);padding:48px;color:#fff;display:flex;align-items:center;gap:48px;flex-wrap:wrap">
+            <div style="flex:1;min-width:280px">
+                <h2 style="font-size:28px;font-weight:800;margin-bottom:12px">Мы вам перезвоним</h2>
+                <p style="opacity:0.7;line-height:1.6">Оставьте заявку, и наш менеджер свяжется с вами в ближайшее время.</p>
+            </div>
+            <form id="callbackForm" style="flex:1;min-width:280px;display:flex;gap:12px;flex-wrap:wrap">
+                <input class="form-input" name="cb_name" placeholder="Ваше имя" required style="flex:1;min-width:140px;background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2);color:#fff">
+                <input class="form-input" name="cb_email" type="email" placeholder="Ваш Email" required style="flex:1;min-width:140px;background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2);color:#fff">
+                <button class="btn btn-primary" type="submit" id="cbBtn">Отправить</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand"><i class="fas fa-lock"></i> GoldenService</div>
+                <p class="footer-brand-desc">Электронные замки для дома, офиса и бизнеса. Работаем по всей Беларуси с 2004 года.</p>
+            </div>
+            <div>
+                <div class="footer-title">Навигация</div>
+                <ul class="footer-links">
+                    <li><a href="DoorLocksShop.html">Главная</a></li>
+                    <li><a href="categoty.html">Каталог</a></li>
+                    <li><a href="wholesale.html">Оптовая продажа</a></li>
+                    <li><a href="about.html">О нас</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="footer-title">Контакты</div>
+                <div class="footer-contact"><i class="fas fa-phone"></i> +375 (29) 856-50-38</div>
+                <div class="footer-contact"><i class="fas fa-envelope"></i> info@goldenservice.by</div>
+                <div class="footer-contact"><i class="fas fa-map-marker-alt"></i> г. Минск, ул. Немига 5</div>
+            </div>
+            <div>
+                <div class="footer-title">Информация</div>
+                <ul class="footer-links">
+                    <li><a href="#">Доставка и оплата</a></li>
+                    <li><a href="#">Гарантии</a></li>
+                    <li><a href="#">Возврат товара</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2024 GoldenService. Все права защищены.</div>
+    </div>
+</footer>
+
+<script src="JS/cart.js"></script>
+<script src="JS/wishlist.js"></script>
+<script src="JS/auth.js"></script>
+<script>
+document.getElementById('callbackForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = document.getElementById('cbBtn');
+    var form = this;
+    btn.disabled = true; btn.textContent = '\u041e\u0442\u043f\u0440\u0430\u0432\u043a\u0430...';
+    fetch('/api/callback.php?action=create', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({name: form.cb_name.value, email: form.cb_email.value})
+    }).then(function(r){return r.json()}).then(function(data){
+        btn.textContent = '\u2713 \u041e\u0442\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u043e!';
+        btn.style.background = '#27ae60';
+        form.reset();
+    }).catch(function(){
+        btn.textContent = '\u041e\u0448\u0438\u0431\u043a\u0430';
+        btn.style.background = '#e74c3c';
+        setTimeout(function(){ btn.disabled=false; btn.textContent='\u041e\u0442\u043f\u0440\u0430\u0432\u0438\u0442\u044c'; btn.style.background=''; }, 2000);
+    });
+});
+
+fetch('/api/products.php?action=list&featured=1&per_page=8')
+    .then(function(r){return r.json()})
+    .then(function(data){
+        var grid=document.getElementById('popularProducts');
+        if(!data.success){
+            grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-3)">Ошибка загрузки</div>';
+            return;
+        }
+        var html='';
+        var products=data.data.products;
+        for(var i=0;i<products.length;i++){
+            var p=products[i];
+            var img=p.main_image||'IMG/lock1.png';
+            var oldP=p.old_price?'<span class="pc-price-old">'+formatP(p.old_price)+' BYN</span>':'';
+            var stars='';for(var s=0;s<5;s++) stars+=s<Math.round(p.rating_avg)?'\u2605':'\u2606';
+            var favActive=Wishlist.has(p.id);
+            html+='<div class="product-card-grid">'
+                +'<div class="pc-badges">'+(p.is_new==1?'<span class="pc-badge pc-badge-new">NEW</span>':'')+'</div>'
+                +'<a href="product.html?id='+p.id+'" class="pc-image" style="text-decoration:none"><img src="'+img+'" alt=""></a>'
+                +'<div class="pc-body">'
+                +'<div class="pc-brand">'+(p.brand_name||'')+'</div>'
+                +'<a href="product.html?id='+p.id+'" class="pc-name" style="text-decoration:none;color:var(--text)">'+p.name+'</a>'
+                +'<div class="pc-rating"><span class="stars">'+stars+'</span><span class="count">('+p.rating_count+')</span></div>'
+                +'<div class="pc-price"><span class="pc-price-current">'+formatP(p.price)+' BYN</span>'+oldP+'</div>'
+                +'<div class="pc-actions">'
+                +'<button class="btn btn-primary btn-sm" data-add-cart data-id="'+p.id+'" data-name="'+esc(p.name)+'" data-brand="'+(p.brand_name||'')+'" data-price="'+p.price+'" data-image="'+img+'"><i class="fas fa-shopping-bag"></i> \u0412 \u043a\u043e\u0440\u0437\u0438\u043d\u0443</button>'
+                +'<button class="pc-fav" data-wishlist-id="'+p.id+'" data-name="'+esc(p.name)+'" data-brand="'+(p.brand_name||'')+'" data-price="'+p.price+'" data-image="'+img+'" style="'+(favActive?'color:#e74c3c;border-color:#e74c3c':'')+'"><i class="'+(favActive?'fas':'far')+' fa-heart"></i></button>'
+                +'</div></div></div>';
+        }
+        grid.innerHTML=html;
+    })
+    .catch(function(){
+        document.getElementById('popularProducts').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-3)">Ошибка загрузки</div>';
+    });
+function formatP(n){return new Intl.NumberFormat('ru-RU').format(Math.round(n))}
+function esc(s){return s.replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
+</script>
+</body>
+</html>

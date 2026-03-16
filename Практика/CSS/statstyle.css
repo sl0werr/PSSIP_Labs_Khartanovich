@@ -1,0 +1,30 @@
+        .stats-container {
+            height: 160px;
+            background-color: #f2f8ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 300px;
+            margin: 30px auto;
+            max-width: 1600px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+            position:relative;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #000000;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #555;
+            font-weight: 500;
+        }

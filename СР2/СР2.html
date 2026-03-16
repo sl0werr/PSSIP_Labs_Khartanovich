@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тематический контроль знаний по теме «Технология CSS»</title>
+    <!--использование внешнего файла-->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /*Импорт таблицы стилей*/
+        @import url('imp.css');
+    </style>
+</head>
+<body>
+    <p style="text-decoration: line-through; color: black; text-align: right;">Хартанович Никита Иванович</p>
+    <h3 class="birth-date">14 февраля 2007 года рождения</h3>
+    <div>
+        <style>
+            /*Псевдоэлемент*/
+            div::first-letter{
+                font-size: 19pt;
+                color: red;
+                text-decoration: line-through;
+            }
+        </style>
+        Мои увлечения: программирование, спорт.
+    </div>
+</body>
+</html>

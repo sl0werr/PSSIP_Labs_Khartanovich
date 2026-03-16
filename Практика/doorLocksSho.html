@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин дверных замков</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/statstyle.css">
+    <link rel="stylesheet" href="CSS/advantages.css">
+    <link rel="stylesheet" href="CSS/Categories.css">
+    <link rel="stylesheet" href="CSS/slider.css">
+    <link rel="stylesheet" href="CSS/form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="CSS/footer.css">
+    <link rel="stylesheet" href="CSS/top.css">
+    <link rel="stylesheet" href="CSS/header.css">
+    <link rel="stylesheet" href="cart.js">
+    <style>
+        
+        /* Стили для корзины */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: -500px;
+            width: 480px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .cart-modal.active {
+            right: 0;
+        }
+        
+        .cart-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+        }
+        
+        .cart-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s;
+        }
+        
+        .close-cart:hover {
+            color: #333;
+        }
+        
+        .cart-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .cart-item {
+            display: flex;
+            flex-direction: column;
+            padding: 15px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cart-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .cart-item-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            flex: 1;
+            margin-right: 10px;
+        }
+        
+        .cart-item-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            white-space: nowrap;
+        }
+        
+        .cart-item-gift {
+            font-size: 14px;
+            color: #2e7d32;
+            margin-top: 5px;
+            padding-left: 10px;
+            position: relative;
+        }
+        
+        .cart-item-gift:before {
+            content: "🎁";
+            position: absolute;
+            left: 0;
+        }
+        
+        .cart-item-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .delete-item {
+            background: none;
+            border: none;
+            color: #d32f2f;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s;
+        }
+        
+        .delete-item:hover {
+            color: #b71c1c;
+        }
+        
+        .cart-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            background: #fff;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .total-label {
+            font-size: 18px;
+            color: #666;
+        }
+        
+        .total-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .cart-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .checkout-btn {
+            background: #2c80ff;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            background: #1a6fe0;
+        }
+        
+        .continue-shopping {
+            background: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .continue-shopping:hover {
+            background: #e8e8e8;
+        }
+        
+        /* Секция "С этим покупают" */
+        .also-buy-section {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        
+        .also-buy-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .also-buy-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .also-buy-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+        
+        .also-buy-image {
+            width: 60px;
+            height: 60px;
+            background: #e8e8e8;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 24px;
+        }
+        
+        .also-buy-info {
+            flex: 1;
+        }
+        
+        .also-buy-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .also-buy-reviews {
+            font-size: 12px;
+            color: #ff9800;
+            margin-bottom: 5px;
+        }
+        
+        .also-buy-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .add-to-cart-small {
+            background: #2c80ff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .add-to-cart-small:hover {
+            background: #1a6fe0;
+        }
+        
+        /* Оверлей */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Счетчик товаров в корзине */
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #e74c3c;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .icon-btn {
+            position: relative;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .cart-modal {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .also-buy-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .add-to-cart-small {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .cart-header {
+                padding: 15px;
+            }
+            
+            .cart-content {
+                padding: 15px;
+            }
+            
+            .cart-footer {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Оверлей для корзины -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    
+    <!-- Модальное окно корзины -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h2 class="cart-title">Корзина</h2>
+            <button class="close-cart" id="closeCart">&times;</button>
+        </div>
+        
+        <div class="cart-content">
+            <!-- Товар в корзине -->
+            <div class="cart-item">
+                <div class="cart-item-header">
+                    <div class="cart-item-title">Дверной Замок Golden Soft для офиса</div>
+                    <div class="cart-item-price">33 000 ₽</div>
+                </div>
+                <div class="cart-item-gift">+ Подарок: "Приложение к замкам Golden Service"</div>
+                <div class="cart-item-actions">
+                    <button class="delete-item">
+                        <i class="fas fa-trash"></i>
+                        Удалить
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Секция "С этим покупают" -->
+            <div class="also-buy-section">
+                <h3 class="also-buy-title">С этим покупают</h3>
+                <div class="also-buy-items">
+                    <!-- Товар 1 -->
+                    <div class="also-buy-item">
+                        <div class="also-buy-image">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="also-buy-info">
+                            <div class="also-buy-name">Дверной Замок Golden Soft для офиса</div>
+                            <div class="also-buy-reviews">(12) отзывов</div>
+                            <div class="also-buy-price">8 000 ₽</div>
+                        </div>
+                        <button class="add-to-cart-small">Добавить</button>
+                    </div>
+                    
+                    <!-- Товар 2 -->
+                    <div class="also-buy-item">
+                        <div class="also-buy-image">
+                            <i class="fas fa-door-closed"></i>
+                        </div>
+                        <div class="also-buy-info">
+                            <div class="also-buy-name">Дверной Замок Golden Soft для офиса</div>
+                            <div class="also-buy-reviews">(12) отзывов</div>
+                            <div class="also-buy-price">9 000 ₽</div>
+                        </div>
+                        <button class="add-to-cart-small">Добавить</button>
+                    </div>
+                    
+                    <!-- Товар 3 -->
+                    <div class="also-buy-item">
+                        <div class="also-buy-image">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <div class="also-buy-info">
+                            <div class="also-buy-name">Дверной Замок Golden Soft для офиса</div>
+                            <div class="also-buy-reviews">(12) отзывов</div>
+                        </div>
+                        <button class="add-to-cart-small">Добавить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cart-footer">
+            <div class="cart-total">
+                <div class="total-label">Итого:</div>
+                <div class="total-price">66 000 ₽</div>
+            </div>
+            <div class="cart-buttons">
+                <a href="buying.html"><button class="checkout-btn" id="checkoutBtn">Оформить заказ</button></a>
+                <button class="continue-shopping" id="continueShopping">Продолжить покупки</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="top-banner">
+        <div class="banner-content">
+            Скидка 10% по промокоду "ZAMOK" на все заказы до 10.09
+        </div>
+        <a href="#" class="banner-link">Обратный звонок</a>
+    </div>
+    
+    <header>
+        <div class="header-container">
+            <img src="IMG/logo.png" width="35" alt="Логотип">
+            <nav>
+                <ul>
+                    <li><a href="DoorLocksShop.html">Главная</a></li>
+                    <li class="has-dropdown">
+                        <a href="categoty.html">Каталог</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Цилиндровые замки</a></li>
+                            <li><a href="#">Сувальдные замки</a></li>
+                            <li><a href="#">Электронные замки</a></li>
+                            <li><a href="#">Врезные замки</a></li>
+                            <li><a href="cat1.html">Накладные замки</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Оптовая продажа</a></li>
+                    <li><a href="#">О нас</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-contacts">
+                <div class="phone">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>+7 (966) 55 88 499</span>
+                </div>
+                
+                <div class="icon-buttons">
+                    <div class="icon-btn" title="Избранное">
+                        <i class="far fa-heart"></i>
+                    </div>
+                    <div class="icon-btn cart-icon-btn" title="Корзина" id="cartIconBtn">
+                        <i class="fas fa-shopping-basket"></i>
+                        <span class="cart-count" id="cartCount">1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="burger" id="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <!-- Мобильное меню -->
+        <nav class="mobile-nav" id="mobileNav">
+            <ul>
+                <li><a href="#">Главная</a></li>
+                <li><a href="#">Каталог</a></li>
+                <li><a href="#">Оптовая продажа</a></li>
+                <li><a href="#">О нас</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    
+
+    <!-- Остальной контент страницы без изменений -->
+    <div class="slider-container"> 
+        <div class="product-slider" id="productSlider">
+            <!-- Карточка товара 1 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="IMG/lock1.png" alt="Golden Soft GS-200Z-5">
+                </div>
+                <div class="product-info">
+                    <div class="brand">Golden Soft</div>
+                    <div class="model">GS-200Z-5 для офиса</div>
+                    
+                    <p class="description">
+                        Замок дверной электронный Golden Soft GS-200Z-5 имеет роскошный глянцевый блеск, четкие линии, красивые формы.
+                    </p>
+                    
+                    <p class="features">
+                        Подходит для установки на деревянную/межкомнатную дверь
+                    </p>
+                    <p class="price-text">Цена</p>
+
+                    <div class="price-container">
+                        <span class="current-price">33 000₽</span>
+                        <span class="old-price">37 000₽</span>
+                    </div>
+                    
+                    <button class="add-to-cart" data-product-id="101">Добавить в корзину</button>
+                </div>
+            </div>
+            
+            <!-- Карточка товара 2 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="IMG/lock2.png" alt="Secure Pro SP-500">
+                </div>
+                <div class="product-info">
+                    <div class="brand">Secure Pro</div>
+                    <div class="model">SP-500 Premium</div>
+                    
+                    <p class="description">
+                        Надежный электронный замок с биометрическим сканером отпечатков пальцев и RFID-картой для максимальной безопасности.
+                    </p>
+                    
+                    <p class="features">
+                        Водонепроницаемый корпус, поддержка до 100 отпечатков пальцев
+                    </p>
+                    <p class="price-text">Цена</p>
+
+                    <div class="price-container">
+                        <span class="current-price">45 900₽</span>
+                        <span class="old-price">52 000₽</span>
+                    </div>
+                    
+                    <button class="add-to-cart" data-product-id="102">Добавить в корзину</button>
+                </div>
+            </div>
+            
+            <!-- Карточка товара 3 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="IMG/lock3.png" alt="HomeGuard HG-100">
+                </div>
+                <div class="product-info">
+                    <div class="brand">HomeGuard</div>
+                    <div class="model">HG-100 Smart</div>
+                    
+                    <p class="description">
+                        Умный замок с поддержкой Wi-Fi и управлением через мобильное приложение. Совместим с системами умного дома.
+                    </p>
+                    
+                    <p class="features">
+                        Управление через приложение, история доступа, временные коды
+                    </p>
+                    <p class="price-text">Цена</p>
+
+                    <div class="price-container">
+                        <span class="current-price">28 500₽</span>
+                        <span class="old-price">32 000₽</span>
+                    </div>
+                    
+                    <button class="add-to-cart" data-product-id="103">Добавить в корзину</button>
+                </div>
+            </div>
+            
+            <!-- Карточка товара 4 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="IMG/lock4.png" alt="IronLock IL-300">
+                </div>
+                <div class="product-info">
+                    <div class="brand">IronLock</div>
+                    <div class="model">IL-300 Heavy Duty</div>
+                    
+                    <p class="description">
+                        Прочный металлический замок с усиленной защитой от взлома. Идеальное решение для входных дверей.
+                    </p>
+                    
+                    <p class="features">
+                        Антивандальная защита, 5 точек запирания, класс защиты 4
+                    </p>
+                    <p class="price-text">Цена</p>
+
+                    <div class="price-container">
+                        <span class="current-price">19 900₽</span>
+                        <span class="old-price">22 500₽</span>
+                    </div>
+                    
+                    <button class="add-to-cart" data-product-id="104">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slider-nav-container">
+            <button class="slider-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+            
+            <div class="slider-nav">
+                <div class="slider-dots" id="sliderDots">
+                    <!-- Точки будут добавлены через JavaScript -->
+                </div>
+            </div>
+            
+            <button class="slider-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <div class="stats-container">
+        <div class="stat-item">
+            <div class="stat-number">5,567</div>
+            <div class="stat-label">Счастливых клиентов</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">1245</div>
+            <div class="stat-label">Продуктов на выбор</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">372</div>
+            <div class="stat-label">Продаж в день</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">20</div>
+            <div class="stat-label">Лет на рынке</div>
+        </div>
+    </div>
+
+    <div>
+        <h2 class="advantages-title">Почему GoldenService?</h2>
+    </div>
+
+    <div class="advantages-container">
+        <div class="advantages-item">
+            <div class="advantages-image"><img src="IMG/Возврат.png" width="110"></div>
+            <div class="advantages-label">Возврат удвоенной стоимости <p>каждого замка в случае брака. </div>
+        </div>
+        <div class="advantages-item">
+            <div class="advantages-image"><img src="IMG/Лайк.png" width="110"></div>
+            <div class="advantages-label">Наносим ваш логотип компании<p> на наш продукт</div>
+        </div>
+        <div class="advantages-item">
+            <div class="advantages-image"><img src="IMG/Возврат.png" width="110"></div>
+            <div class="advantages-label">Возврат удвоенной стоимости<p> каждого замка в случае брака. </div>
+        </div>
+    </div>
+
+    <div>
+        <h2 class="advantages-title" style="margin-bottom: 100px;">Категории</h2>
+    </div>
+
+    <div class="menu-container">
+        <div class="product-cardR">
+            <div class="product-contentR">
+                <div>
+                    <img src="IMG/ДляОтелей.png" alt="Изображение товара" class="product-imageR">
+                    <h3 class="product-titleR">Для отелей</h3>
+                </div>
+                <a href="#" class="product-buttonR">Перейти</a>
+            </div>
+            </div>
+                    <div class="product-cardR">
+            <div class="product-contentR">
+                <div>
+                    <img src="IMG/ДляШкафчиков.png" alt="Изображение товара" class="product-imageR">
+                    <h3 class="product-titleR">Для шкафчиков</h3>
+                </div>
+                <a href="#" class="product-buttonR">Перейти</a>
+            </div>
+        </div>
+    </div>
+        <div class="menu-container">
+        <div class="product-cardR">
+            <div class="product-contentR">
+                <div>
+                    <img src="IMG/ДляОфисов.png" alt="Изображение товара" class="product-imageR">
+                    <h3 class="product-titleR">Для офисов</h3>
+                </div>
+                <a href="#" class="product-buttonR">Перейти</a>
+            </div>
+            </div>
+                    <div class="product-cardR">
+            <div class="product-contentR">
+                <div>
+                    <img src="IMG/ДляДома.png" alt="Изображение товара" class="product-imageR">
+                    <h3 class="product-titleR">Замки для дома</h3>
+                </div>
+                <a href="#" class="product-buttonR">Перейти</a>
+            </div>
+        </div>
+    </div>
+    <button class="add-to-cart" style="margin-left: 600px;">Все категории</button>
+
+<div class="containerS">
+        <h1 class="section-titleS">Наши популярные продукты</h1>
+        
+        <div class="slider-containerS">
+            <div class="slider-navS">
+                <button class="slider-btnS" id="prevnBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
+                    </svg>
+                </button>
+                <button class="slider-btnS" id="nextnBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="products-sliderS" id="slider">
+                <!-- Карточка 1 -->
+                <div class="product-cardS">
+                    <div class="product-badgesS">
+                        <span class="badgeS badge-stockS">В наличии</span>
+                        <span class="badgeS badge-giftS">Подарок</span>
+                    </div>
+                    <img src="IMG/lock1.png" alt="Дверной Замок" class="product-image">
+                    <div class="product-infoS">
+                        <h3 class="product-nameS">Дверной Замок Golden Soft для отеля</h3>
+                        <div class="product-priceS">
+                            <span class="current-priceS">33 000P</span>
+                            <span class="old-priceS">37 000P</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Карточка 2 -->
+                <div class="product-cardS">
+                    <div class="product-badgesS">
+                        <span class="badgeS badge-no-stockS">Нет в наличии</span>
+                        <span class="badgeS badge-giftS">Подарок</span>
+
+                    </div>
+                    <div class="product-badgesS">
+                        <span class="badgeS badge-saleS">SALE</span>
+                    </div>
+                    <img src="IMG/lock2.png" alt="Вариативный замок" class="product-image">
+                    <div class="product-infoS">
+                        <h3 class="product-nameS">Вариативный замок Golden Soft для отеля</h3>
+                        <div class="product-priceS">
+                            <span class="current-priceS">7 000P</span>
+                            <span class="old-priceS">8 000P</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Карточка 3 -->
+                <div class="product-cardS">
+                    <div class="product-badgesS">
+                        <span class="badgeS badge-stockS">В наличии</span>
+                        <span class="badgeS badge-giftS">Подарок</span>
+                    </div>
+                    <div class="product-badgesS">
+                        <span class="badgeS badge-saleS">SALE</span>
+                    </div>
+                    <img src="IMG/lock3.png" alt="Дверной Замок" class="product-image">
+                    <div class="product-infoS">
+                        <h3 class="product-nameS">Дверной Замок Golden Soft для офиса</h3>
+                        <div class="product-priceS">
+                            <span class="current-priceS">33 000P</span>
+                            <span class="old-priceS">39 000P</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Карточка 4 -->
+                <div class="product-cardS">
+                    <div class="product-badgesS">
+                        <span class="badgeS badge-stockS">В наличии</span>
+                        <span class="badgeS badge-giftS">Подарок</span>
+                    </div>
+                    <div class="product-badgesS">
+                        <span class="badgeS badge-saleS">SALE</span>
+                    </div>
+                    <img src="IMG/lock4.png" alt="Дверной Замок" class="product-image">
+                    <div class="product-infoS">
+                        <h3 class="product-nameS">Дверной Замок Golden Soft для офиса</h3>
+                        <div class="product-priceS">
+                            <span class="current-priceS">9 000P</span>
+                            <span class="old-priceS">12 000P</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Дополнительные карточки для демонстрации скролла -->
+                <div class="product-cardS">
+                    <div class="product-badgesS">
+                        <span class="badgeS badge-stockS">В наличии</span>
+                    </div>
+                    <div class="product-badgesS">
+                        <span class="badgeS badge-saleS">SALE</span>
+                    </div>
+                    <img src="IMG/lock1.png" alt="Дверной Замок" class="product-image">
+                    <div class="product-infoS">
+                        <h3 class="product-nameS">Замок Premium для дома</h3>
+                        <div class="product-priceS">
+                            <span class="current-priceS">15 000P</span>
+                            <span class="old-priceS">18 000P</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-cardS">
+                    <div class="product-badgesS">
+                        <span class="badgeS badge-stockS">В наличии</span>
+                    </div>
+                    <img src="IMG/lock2.png" alt="Дверной Замок" class="product-image">
+                    <div class="product-infoS">
+                        <h3 class="product-nameS">Замок Standard для шкафчика</h3>
+                        <div class="product-priceS">
+                            <span class="current-priceS">5 000P</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="stats-container" style="height: 300px;">
+    <div class="callback-container">
+        <h1 class="callback-title">Мы Вам перезвоним</h1>
+        <p class="callback-description">Если у вас возникли какие-то вопросы или проблемы, заполните форму и мы Вам перезвоним.</p>
+        
+        <form id="callbackForm" class="callback-form">
+            <div class="form-group">
+                <input type="text" id="name" class="form-input" placeholder="Ваше имя">
+                <div id="nameError" class="error-message">Пожалуйста, введите ваше имя</div>
+            </div>
+            
+            <div class="form-group">
+                <input type="email" id="email" class="form-input" placeholder="Ваш Email">
+                <div id="emailError" class="error-message">Пожалуйста, введите корректный email</div>
+            </div>
+            
+            <button type="submit" id="submitBtn" class="submit-btn">Отправить</button>
+        </form>
+        
+        <div id="successMessage" class="success-message">Спасибо! Мы скоро с вами свяжемся.</div>
+    </div>
+</div>
+
+<footer>
+        <div class="footer-container">
+            <div class="footer-logo-column">
+                <img src="IMG/logo.png" alt="Golden Soft Logo" class="footer-logo">
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-vk"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Навигация</h3>
+                <ul class="footer-list">
+                    <li><a href="#">Главная</a></li>
+                    <li><a href="#">Каталог</a></li>
+                    <li><a href="#">Оптовая продажа</a></li>
+                    <li><a href="#">О нас</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Наши Контакты</h3>
+                <ul class="footer-list">
+                    <li class="contact-item">
+                        <span class="contact-icon"><i class="fas fa-phone"></i></span>
+                        <span>+7 (988) 565 00 38</span>
+                    </li>
+                    <li class="contact-item">
+                        <span class="contact-icon"><i class="fas fa-phone"></i></span>
+                        <span>+375 33 662 82 56</span>
+                    </li>
+                    <li class="contact-item">
+                        <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                        <span>vladpertcev@mail.ru</span>
+                    </li>
+                    <li class="contact-item">
+                        <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                        <span>korobko416@gmail.com</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Наш Адрес</h3>
+                <ul class="footer-list">
+                    <li class="contact-item">
+                        <span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+                        <span>Россия, Ростов-на-Дону<br>ул. Богачева, 16</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Информация</h3>
+                <ul class="footer-list">
+                    <li><a href="#">Доставка и оплата</a></li>
+                    <li><a href="#">Гарантии</a></li>
+                    <li><a href="#">Возврат товара</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            © 2021 Golden Soft All rights reserved.
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Наверх">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <script>
+        // Функционал корзины
+        const cartIconBtn = document.getElementById('cartIconBtn');
+        const cartModal = document.getElementById('cartModal');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const closeCart = document.getElementById('closeCart');
+        const continueShopping = document.getElementById('continueShopping');
+        const cartCount = document.getElementById('cartCount');
+        
+        // Открытие корзины
+        function openCart() {
+            cartModal.classList.add('active');
+            cartOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Закрытие корзины
+        function closeCartModal() {
+            cartModal.classList.remove('active');
+            cartOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Обработчики событий
+        if (cartIconBtn) {
+            cartIconBtn.addEventListener('click', openCart);
+        }
+        
+        if (closeCart) {
+            closeCart.addEventListener('click', closeCartModal);
+        }
+        
+        if (cartOverlay) {
+            cartOverlay.addEventListener('click', closeCartModal);
+        }
+        
+        if (continueShopping) {
+            continueShopping.addEventListener('click', closeCartModal);
+        }
+        
+        // Удаление товара из корзины
+        const deleteButtons = document.querySelectorAll('.delete-item');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const cartItem = this.closest('.cart-item');
+                if (cartItem) {
+                    if (confirm('Удалить товар из корзины?')) {
+                        cartItem.remove();
+                        
+                        // Обновляем счетчик корзины
+                        updateCartCount(-1);
+                        
+                        // Обновляем итоговую сумму
+                        updateCartTotal();
+                        
+                        // Если корзина пуста, показываем сообщение
+                        const cartItems = document.querySelectorAll('.cart-item');
+                        if (cartItems.length === 0) {
+                            const cartContent = document.querySelector('.cart-content');
+                            cartContent.innerHTML = `
+                                <div style="text-align: center; padding: 40px 0;">
+                                    <i class="fas fa-shopping-basket" style="font-size: 48px; color: #ddd; margin-bottom: 20px;"></i>
+                                    <h3 style="color: #666; margin-bottom: 10px;">Корзина пуста</h3>
+                                    <p style="color: #888;">Добавьте товары из каталога</p>
+                                </div>
+                            `;
+                        }
+                    }
+                }
+            });
+        });
+        
+        // Добавление товаров из секции "С этим покупают"
+        const addToCartSmallButtons = document.querySelectorAll('.add-to-cart-small');
+        addToCartSmallButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const alsoBuyItem = this.closest('.also-buy-item');
+                const productName = alsoBuyItem.querySelector('.also-buy-name').textContent;
+                const productPrice = alsoBuyItem.querySelector('.also-buy-price').textContent;
+                
+                // Создаем новый элемент корзины
+                const newCartItem = document.createElement('div');
+                newCartItem.className = 'cart-item';
+                newCartItem.innerHTML = `
+                    <div class="cart-item-header">
+                        <div class="cart-item-title">${productName}</div>
+                        <div class="cart-item-price">${productPrice}</div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <button class="delete-item">
+                            <i class="fas fa-trash"></i>
+                            Удалить
+                        </button>
+                    </div>
+                `;
+                
+                // Добавляем в корзину
+                const cartContent = document.querySelector('.cart-content');
+                const alsoBuySection = document.querySelector('.also-buy-section');
+                cartContent.insertBefore(newCartItem, alsoBuySection);
+                
+                // Добавляем обработчик удаления для нового элемента
+                newCartItem.querySelector('.delete-item').addEventListener('click', function() {
+                    if (confirm('Удалить товар из корзины?')) {
+                        newCartItem.remove();
+                        updateCartCount(-1);
+                        updateCartTotal();
+                    }
+                });
+                
+                // Обновляем счетчик и сумму
+                updateCartCount(1);
+                updateCartTotal();
+                
+                // Показываем уведомление
+                alert(`Товар "${productName}" добавлен в корзину!`);
+            });
+        });
+        
+        // Обновление счетчика корзины
+        function updateCartCount(change) {
+            let currentCount = parseInt(cartCount.textContent) || 0;
+            currentCount += change;
+            if (currentCount < 0) currentCount = 0;
+            cartCount.textContent = currentCount;
+            
+            // Показываем/скрываем счетчик
+            if (currentCount > 0) {
+                cartCount.style.display = 'flex';
+            } else {
+                cartCount.style.display = 'none';
+            }
+        }
+        
+        // Обновление итоговой суммы
+        function updateCartTotal() {
+            const cartItems = document.querySelectorAll('.cart-item');
+            let total = 0;
+            
+            cartItems.forEach(item => {
+                const priceElement = item.querySelector('.cart-item-price');
+                if (priceElement) {
+                    const priceText = priceElement.textContent;
+                    const price = parseFloat(priceText.replace(/[^\d]/g, '')) || 0;
+                    total += price;
+                }
+            });
+            
+            const totalPriceElement = document.querySelector('.total-price');
+            if (totalPriceElement) {
+                totalPriceElement.textContent = new Intl.NumberFormat('ru-RU').format(total) + ' ₽';
+            }
+        }
+        
+        // Добавление товаров из основного каталога
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const productCard = this.closest('.product-card');
+                const brand = productCard.querySelector('.brand')?.textContent || '';
+                const model = productCard.querySelector('.model')?.textContent || '';
+                const currentPrice = productCard.querySelector('.current-price')?.textContent || '';
+                
+                const productName = `${brand} ${model}`;
+                
+                // Создаем новый элемент корзины
+                const newCartItem = document.createElement('div');
+                newCartItem.className = 'cart-item';
+                newCartItem.innerHTML = `
+                    <div class="cart-item-header">
+                        <div class="cart-item-title">${productName}</div>
+                        <div class="cart-item-price">${currentPrice}</div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <button class="delete-item">
+                            <i class="fas fa-trash"></i>
+                            Удалить
+                        </button>
+                    </div>
+                `;
+                
+                // Добавляем в корзину
+                const cartContent = document.querySelector('.cart-content');
+                const alsoBuySection = document.querySelector('.also-buy-section');
+                
+                // Если корзина пуста, добавляем сначала
+                if (cartContent.querySelector('.cart-item')) {
+                    cartContent.insertBefore(newCartItem, alsoBuySection);
+                } else {
+                    // Если есть сообщение о пустой корзине, заменяем его
+                    const emptyCartMessage = cartContent.querySelector('div[style*="text-align: center"]');
+                    if (emptyCartMessage) {
+                        emptyCartMessage.remove();
+                        cartContent.prepend(newCartItem);
+                    }
+                }
+                
+                // Добавляем обработчик удаления
+                newCartItem.querySelector('.delete-item').addEventListener('click', function() {
+                    if (confirm('Удалить товар из корзины?')) {
+                        newCartItem.remove();
+                        updateCartCount(-1);
+                        updateCartTotal();
+                    }
+                });
+                
+                // Обновляем счетчик и сумму
+                updateCartCount(1);
+                updateCartTotal();
+                
+                // Показываем уведомление
+                alert(`Товар "${productName}" добавлен в корзину!`);
+            });
+        });
+        
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            // Обновляем счетчик на основе товаров в корзине
+            const initialItems = document.querySelectorAll('.cart-item').length;
+            cartCount.textContent = initialItems;
+            
+            if (initialItems === 0) {
+                cartCount.style.display = 'none';
+            }
+            
+            updateCartTotal();
+        });
+        
+        // Закрытие по клавише ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && cartModal.classList.contains('active')) {
+                closeCartModal();
+            }
+        });
+        
+        // Дополнительный код для страницы
+        console.log('Корзина подключена!');
+        console.log('- Нажмите на иконку корзины в хедере для открытия');
+        console.log('- Добавляйте товары из каталога в корзину');
+        console.log('- Удаляйте товары кнопкой "Удалить"');
+        console.log('- Добавляйте дополнительные товары из секции "С этим покупают"');
+    </script>
+    <script src="JS/script.js">
+        window.products = [
+            {
+                id: 101,
+                title: "Golden Soft GS-200Z-5 для офиса",
+                price: 33000,
+                oldPrice: 37000,
+                reviews: 12,
+                badges: ["in-stock"],
+                icon: "fa-lock"
+            },
+            {
+                id: 102,
+                title: "Secure Pro SP-500 Premium",
+                price: 45900,
+                oldPrice: 52000,
+                reviews: 18,
+                badges: ["in-stock"],
+                icon: "fa-door-closed"
+            },
+            {
+                id: 103,
+                title: "HomeGuard HG-100 Smart",
+                price: 28500,
+                oldPrice: 32000,
+                reviews: 15,
+                badges: ["sale"],
+                icon: "fa-home"
+            },
+            {
+                id: 104,
+                title: "IronLock IL-300 Heavy Duty",
+                price: 19900,
+                oldPrice: 22500,
+                reviews: 8,
+                badges: ["in-stock"],
+                icon: "fa-lock"
+            }
+        ];
+
+    </script>
+
+</body>
+</html>

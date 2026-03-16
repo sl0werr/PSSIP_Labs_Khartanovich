@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оформление заказа</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .left-column {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .right-column {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .phone-input {
+            display: flex;
+            align-items: center;
+        }
+        
+        .phone-prefix {
+            background-color: #f9f9f9;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-right: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+        }
+        
+        .phone-input input {
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-option input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .divider {
+            border: none;
+            height: 1px;
+            background-color: #eee;
+            margin: 25px 0;
+        }
+        
+        .order-summary {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+        }
+        
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .product-name {
+            font-weight: 500;
+        }
+        
+        .gift {
+            color: #27ae60;
+            font-weight: 500;
+        }
+        
+        .addition {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .price {
+            font-weight: 600;
+            color: #2c3e50;
+            white-space: nowrap;
+        }
+        
+        .total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 22px;
+            font-weight: 700;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        
+        .edit-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #3498db;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .edit-link:hover {
+            text-decoration: underline;
+        }
+        
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .checkbox-option input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .time-section {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .time-select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            flex-grow: 1;
+            min-width: 200px;
+        }
+        
+        .add-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .add-button:hover {
+            background-color: #2980b9;
+        }
+        
+        .footer-note {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .time-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .add-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Оформление заказа</h1>
+    
+    <div class="container">
+        <div class="left-column">
+            <!-- Контактные данные -->
+            <div class="section">
+                <h2>1. Контактные данные</h2>
+                
+                <div class="form-group">
+                    <label for="last-name">Фамилия</label>
+                    <input type="text" id="last-name" value="Зайцев">
+                </div>
+                
+                <div class="form-group">
+                    <label for="first-name">Имя</label>
+                    <input type="text" id="first-name" value="Михаил">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Телефон</label>
+                    <div class="phone-input">
+                        <div class="phone-prefix">+7</div>
+                        <input type="tel" id="phone" placeholder="(___) ___ __ __">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">e-mail</label>
+                    <input type="email" id="email" value="example@mail.ru">
+                </div>
+            </div>
+            
+            <!-- Доставка -->
+            <div class="section">
+                <h2>2. Доставка</h2>
+                
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="delivery1" name="delivery" checked>
+                        <label for="delivery1">СДЭК</label>
+                    </div>
+                    
+                    <div class="radio-option">
+                        <input type="radio" id="delivery2" name="delivery">
+                        <label for="delivery2">Почта России</label>
+                    </div>
+                    
+                    <div class="radio-option">
+                        <input type="radio" id="delivery3" name="delivery">
+                        <label for="delivery3">Деловые линии</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Оплата -->
+            <div class="section">
+                <h2>3. Оплата</h2>
+                
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="payment1" name="payment" checked>
+                        <label for="payment1">Оплата при получении товара</label>
+                    </div>
+                    
+                    <div class="radio-option">
+                        <input type="radio" id="payment2" name="payment">
+                        <label for="payment2">Банковская карта</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="comment">Комментарий</label>
+                    <textarea id="comment" placeholder="Напишите комментарий"></textarea>
+                </div>
+            </div>
+            
+            <hr class="divider">
+            
+            <!-- Комплектация -->
+            <div class="section">
+                <h2>Комплектация</h2>
+                
+                <div class="checkbox-option">
+                    <input type="checkbox" id="installation">
+                    <label for="installation">Нужна установка</label>
+                </div>
+                
+                <div class="checkbox-option">
+                    <input type="checkbox" id="software">
+                    <label for="software">Настройка софта</label>
+                </div>
+            </div>
+            
+            <!-- Подъезд -->
+            <div class="section">
+                <h2>Подъехать часа</h2>
+                
+                <div class="time-section">
+                    <select class="time-select">
+                        <option>Происходя</option>
+                        <option>10:00 - 12:00</option>
+                        <option>12:00 - 14:00</option>
+                        <option>14:00 - 16:00</option>
+                        <option>16:00 - 18:00</option>
+                    </select>
+                    
+                    <button class="add-button">Добавить</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Итого -->
+        <div class="right-column">
+            <div class="section order-summary">
+                <h2>Итого</h2>
+                
+                <div class="product-item">
+                    <div class="product-details">
+                        <div class="product-name">Дверной Замок Golden Soft для офиса</div>
+                        <div class="gift">+ Подарок</div>
+                        <div class="addition">Приложение к замкам Golden Service</div>
+                    </div>
+                    <div class="price">33 000 ₽</div>
+                </div>
+                
+                <div class="product-item">
+                    <div class="product-details">
+                        <div class="product-name">Дополнительная услуга</div>
+                    </div>
+                    <div class="price">+ 600 ₽</div>
+                </div>
+                
+                <a href="#" class="edit-link">Редактировать</a>
+                
+                <div class="total">
+                    <span>К оплате:</span>
+                    <span>66 000 ₽</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-note">
+        Оформлен заказ, в прежнюю условку пользовательского соглашения
+    </div>
+
+    <script>
+        // Добавляем интерактивности для формы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Форматирование номера телефона
+            const phoneInput = document.getElementById('phone');
+            
+            phoneInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                
+                if (value.length > 0) {
+                    value = '(' + value.substring(0, 3) + ') ' + value.substring(3, 6) + ' ' + value.substring(6, 8) + ' ' + value.substring(8, 10);
+                }
+                
+                e.target.value = value;
+            });
+            
+            // Обработка кнопки "Добавить"
+            const addButton = document.querySelector('.add-button');
+            addButton.addEventListener('click', function() {
+                alert('Время подъезда добавлено');
+            });
+            
+            // Подсветка выбранных опций доставки и оплаты
+            const deliveryOptions = document.querySelectorAll('input[name="delivery"]');
+            const paymentOptions = document.querySelectorAll('input[name="payment"]');
+            
+            deliveryOptions.forEach(option => {
+                option.addEventListener('change', function() {
+                    deliveryOptions.forEach(opt => {
+                        opt.parentElement.style.backgroundColor = '';
+                    });
+                    this.parentElement.style.backgroundColor = '#f0f8ff';
+                });
+            });
+            
+            paymentOptions.forEach(option => {
+                option.addEventListener('change', function() {
+                    paymentOptions.forEach(opt => {
+                        opt.parentElement.style.backgroundColor = '';
+                    });
+                    this.parentElement.style.backgroundColor = '#f0f8ff';
+                });
+            });
+            
+            // Инициализация подсветки выбранных опций
+            document.querySelector('input[name="delivery"]:checked').parentElement.style.backgroundColor = '#f0f8ff';
+            document.querySelector('input[name="payment"]:checked').parentElement.style.backgroundColor = '#f0f8ff';
+        });
+    </script>
+</body>
+</html>
